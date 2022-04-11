@@ -96,7 +96,7 @@ class StartVc: UIViewController {
     }
 
     private func setupPageControl() {
-        pageControl.numberOfPages = dataController.spacexStorage.count
+        pageControl.numberOfPages = dataController.spacexRocketStorage.count
         pageControl.currentPage = 0
         pageControl.tintColor = .black
         //pageControl.tintColor = randomColor()
@@ -121,7 +121,7 @@ class StartVc: UIViewController {
     }
 
        private func createTableView() {
-        for modelIndex in 0 ..< dataController.spacexStorage.count {
+        for modelIndex in 0 ..< dataController.spacexRocketStorage.count {
                 let tableView = UITableView()
                 
                 tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -193,7 +193,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let modelIndex = tableView.tag - tableViewUniqueIdFactor
-        let rocket = dataController.spacexStorage[modelIndex]
+        let rocket = dataController.spacexRocketStorage[modelIndex]
         //let rocket = rocketDataArray[modelIndex]
         switch indexPath.row {
         case 0:
@@ -326,7 +326,7 @@ extension StartVc {
     @objc func openNewViewController(sender:UIButton) {
         let openvc = OpenVc()
         let currentModel = sender.tag
-        openvc.instanceOfRocket = dataController.spacexStorage[currentModel]
+        openvc.launchList = dataController.spasexLaunchesData[currentModel]
         self.navigationController?.pushViewController(openvc, animated: true)
     }
 }

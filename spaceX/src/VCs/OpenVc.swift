@@ -10,7 +10,7 @@ import UIKit
 
 class OpenVc: UITableViewController {
     
-    var instanceOfRocket: RocketData!
+    var launchList:LaunchesData!
     //var dataController: DataController
     var myName:String?
     
@@ -46,9 +46,9 @@ class OpenVc: UITableViewController {
                 let font: UIFont = UIFont.boldSystemFont(ofSize: 30)
                 cell.textLabel?.textColor = .white
                 cell.textLabel?.font = font
-                if instanceOfRocket != nil {
+                if launchList != nil {
                     
-                    cell.textLabel?.text = instanceOfRocket.countryName
+                    cell.textLabel?.text = launchList.name
                 }
                 cell.backgroundColor = .black
 

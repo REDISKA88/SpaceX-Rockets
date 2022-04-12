@@ -3,7 +3,6 @@ import UIKit
 class StartVc: UIViewController {
     
     var dataController = DataController()
-    
     var images = [UIImage(named: "img"), UIImage(named: "1")]
     
         let scrollView: UIScrollView =
@@ -30,20 +29,26 @@ class StartVc: UIViewController {
         let tableViewCellIdentifier = "cell"
         
         let tableViewUniqueIdFactor = 1000
-
+        var allRocketsv4: SpaceXRockets?
         override func viewDidLoad()
         {
             super.viewDidLoad()
-            
+            setupScrollView()
+            setupStackView()
+            setupPageControl()
+            Manager.shared.getRockets { (rockets) in
+            self.allRocketsv4 = rockets
+
+                
+                self.createTableView(pages: rockets.count)
+            }
             title = "SpaceX-Rockets"
             view.backgroundColor = .black
             navigationController?.navigationBar.barTintColor = .clear
             navigationController?.navigationBar.tintColor = .white
             
-            setupScrollView()
-            setupStackView()
-            setupPageControl()
-            createTableView()
+            
+           // createTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -72,7 +77,7 @@ class StartVc: UIViewController {
         scrollView.widthAnchor.constraint(equalToConstant: pageWidth).isActive = true
         
         scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                                        constant: -padding * 3).isActive = true
+                                           constant: -padding * 1.5).isActive = true
     }
 
     private func setupStackView() {
@@ -90,13 +95,12 @@ class StartVc: UIViewController {
         
         stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
             .isActive = true
-        
         stackView.heightAnchor.constraint(equalTo: scrollView.heightAnchor,
                                           multiplier: 1).isActive = true
     }
 
     private func setupPageControl() {
-        pageControl.numberOfPages = dataController.spacexRocketStorage.count
+        pageControl.numberOfPages = 1
         pageControl.currentPage = 0
         pageControl.tintColor = .black
         //pageControl.tintColor = randomColor()
@@ -113,15 +117,17 @@ class StartVc: UIViewController {
         pageControl.topAnchor.constraint(equalTo: scrollView.bottomAnchor)
             .isActive = true
         
-        pageControl.widthAnchor.constraint(equalToConstant: 200)
+        // 200
+        pageControl.widthAnchor.constraint(equalToConstant: 0)
             .isActive = true
         
         pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
             .isActive = true
     }
 
-       private func createTableView() {
-        for modelIndex in 0 ..< dataController.spacexRocketStorage.count {
+    private func createTableView(pages: Int) {
+        pageControl.numberOfPages = pages
+        for modelIndex in 0 ..< pages {
                 let tableView = UITableView()
                 
                 tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -193,7 +199,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let modelIndex = tableView.tag - tableViewUniqueIdFactor
-        let rocket = dataController.spacexRocketStorage[modelIndex]
+        let rocketAtIndex = allRocketsv4?[modelIndex]
         //let rocket = rocketDataArray[modelIndex]
         switch indexPath.row {
         case 0:
@@ -209,7 +215,8 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
             let font: UIFont = UIFont.boldSystemFont(ofSize: 30)
             cell.textLabel?.textColor = .white
             cell.textLabel?.font = font
-            cell.textLabel?.text = rocket.generalName
+          // cell.textLabel?.text = rocket.generalName
+            cell.textLabel?.text = rocketAtIndex?.name
             cell.backgroundColor = .black
             return cell
             
@@ -217,7 +224,8 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! infoCell
             cell.titleLabel.text = "Первый запуск"
             cell.valueLabel.text = ""
-            cell.unitLabel.text = rocket.launchDate
+            //cell.unitLabel.text = rocket.launchDate
+            cell.unitLabel.text = rocketAtIndex?.firstFlight
             cell.unitLabel.font = UIFont.systemFont(ofSize: 20)
             cell.unitLabel.textColor = .white
             return cell
@@ -227,15 +235,26 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
             cell.titleLabel.text = "Страна"
             //cell.valueLabel.text = rocket.countryName
             cell.valueLabel.text = ""
-            cell.unitLabel.text = rocket.countryName
+            //cell.unitLabel.text = rocket.countryName
+            
+            if rocketAtIndex?.country?.contains("Marshall Islands") == true {
+                cell.unitLabel.text = "Marshall Islands"
+            } else { cell.unitLabel.text = rocketAtIndex?.country }
             cell.unitLabel.font = UIFont.systemFont(ofSize: 20)
             cell.unitLabel.textColor = .white
             return cell
             
         case 4:
             let cell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! infoCell
+            guard let cost = rocketAtIndex?.costPerLaunch else {
+                cell.valueLabel.text = "UNKNOWN"
+                cell.valueLabel.font = UIFont.boldSystemFont(ofSize: 20)
+                cell.unitLabel.text = "$"
+                return cell
+            }
+            
             cell.titleLabel.text = "Стоимость запуска"
-            cell.valueLabel.text = "\(rocket.launchCost)"
+            cell.valueLabel.text = String(cost)
             cell.valueLabel.font = UIFont.boldSystemFont(ofSize: 20)
             cell.unitLabel.text = "$"
             return cell
@@ -251,7 +270,13 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
         case 6:
             let cell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! infoCell
             cell.titleLabel.text = "Количество двигателей"
-            cell.valueLabel.text = "\(rocket.firstStageEngines)"
+            //cell.valueLabel.text = "\(rocket.firstStageEngines)"
+            guard let engines = rocketAtIndex?.firstStage?.engines else {
+                cell.valueLabel.font = UIFont.boldSystemFont(ofSize: 20)
+                cell.unitLabel.text = "UNKNOWN"
+                return cell
+            }
+            cell.valueLabel.text = String(engines)
             cell.valueLabel.font = UIFont.boldSystemFont(ofSize: 20)
             cell.unitLabel.text = "nan"
             cell.unitLabel.textColor = .clear
@@ -259,15 +284,16 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
         case 7:
             let cell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! infoCell
             cell.titleLabel.text = "Колличетво топлива"
-            cell.valueLabel.text = "\(rocket.firstStageFuel)"
+            cell.valueLabel.text = String(rocketAtIndex?.firstStage?.fuelAmountTons ?? 0)
+           // cell.valueLabel.text = "\(rocket.firstStageFuel)"
             cell.valueLabel.font = UIFont.boldSystemFont(ofSize: 20)
-            cell.unitLabel.text = "ton"
+            cell.unitLabel.text = "tons"
             return cell
             
         case 8:
             let cell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! infoCell
             cell.titleLabel.text = "Время сгорания"
-            cell.valueLabel.text = "\(rocket.firstStageBurningTime)"
+            cell.valueLabel.text = "\(rocketAtIndex?.firstStage?.burnTimeSEC ?? 0)"
             cell.valueLabel.font = UIFont.boldSystemFont(ofSize: 20)
             cell.unitLabel.text = "sec"
             return cell
@@ -282,7 +308,12 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
         case 10:
             let cell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! infoCell
             cell.titleLabel.text = "Количество двигателей"
-            cell.valueLabel.text = "\(rocket.secondStageEngines)"
+            guard let engines = rocketAtIndex?.firstStage?.engines else {
+                cell.valueLabel.font = UIFont.boldSystemFont(ofSize: 20)
+                cell.unitLabel.text = "UNKNOWN"
+                return cell
+            }
+            cell.valueLabel.text = String(engines)
             cell.valueLabel.font = UIFont.boldSystemFont(ofSize: 20)
             cell.unitLabel.text = "nan"
             cell.unitLabel.textColor = .clear
@@ -290,14 +321,14 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
         case 11:
             let cell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! infoCell
             cell.titleLabel.text = "Колличетво топлива"
-            cell.valueLabel.text = "\(rocket.secondStageFuel)"
-            cell.unitLabel.text = "ton"
+            cell.valueLabel.text = String(rocketAtIndex?.secondStage?.fuelAmountTons ?? 0)
+            cell.unitLabel.text = "tons"
             return cell
             
         case 12:
             let cell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! infoCell
             cell.titleLabel.text = "Время сгорания"
-            cell.valueLabel.text = "\(rocket.secondStageBurningTime)"
+            cell.valueLabel.text = "\(rocketAtIndex?.secondStage?.burnTimeSEC ?? 0)"
             cell.unitLabel.text = "sec"
             return cell
             

@@ -17,7 +17,8 @@ struct SpaceXRocket: Codable {
     let stages, boosters, costPerLaunch, successRatePct: Int?
     let firstFlight, country, company: String?
     let wikipedia: String?
-    let spaceXRocketDescription, id: String?
+    let spaceXRocketDescription: String?
+    let id: RocketTypes?
 
     enum CodingKeys: String, CodingKey {
         case height, diameter, mass
@@ -34,6 +35,12 @@ struct SpaceXRocket: Codable {
         case country, company, wikipedia
         case spaceXRocketDescription = "description"
         case id
+    }
+    enum RocketTypes: String, Codable {
+        case falconOne = "5e9d0d95eda69955f709d1eb"
+        case falconNine = "5e9d0d95eda69973a809d1ec"
+        case falconHeavy = "5e9d0d95eda69974db09d1ed"
+        case starship = "5e9d0d96eda699382d09d1ee"
     }
 }
 

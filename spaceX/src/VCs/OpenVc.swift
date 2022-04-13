@@ -12,13 +12,16 @@ class OpenVc: UITableViewController {
     
     //var dataController: DataController
     var myName:String?
-   var launches: NewLanch!
     
+    var currentSpaceshipLaunches: SpaceXLaunches!
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self,
         forCellReuseIdentifier: "cell")
-        if launches == nil {print("NILL ON VC2")}
+//        requestLaunches(urlString: "https://api.spacexdata.com/v4/launches") { (launches) in
+//            guard let array = launches else {return}
+//            self.myStars = array
+//        }
         //view.backgroundColor = .black
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -28,10 +31,9 @@ class OpenVc: UITableViewController {
     }
 
     
-    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 10
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -45,11 +47,16 @@ class OpenVc: UITableViewController {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
                 let font: UIFont = UIFont.boldSystemFont(ofSize: 30)
-    
                 cell.textLabel?.textColor = .white
                 cell.textLabel?.font = font
-        cell.textLabel?.text = "rocketNm?.details"
-                cell.backgroundColor = .black
+        
+        guard let name = currentSpaceshipLaunches else {
+            cell.textLabel?.text = "text"
+            cell.backgroundColor = .black
+            return cell
+        }
+        cell.textLabel?.text = name.name
+        cell.backgroundColor = .black
        
         return cell
     }

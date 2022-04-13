@@ -26,10 +26,12 @@ class StartVc: UIViewController {
         let padding: CGFloat = 20
         let pageWidth = UIScreen.main.bounds.width
         let tableViewCellIdentifier = "cell"
-        
         let tableViewUniqueIdFactor = 1000
+        var allLaunches: Launches?
         var allRocketsv4: SpaceXRockets?
-        var allLaunchesv4: NewLanch?
+
+    
+    
         override func viewDidLoad()
         {
             super.viewDidLoad()
@@ -40,9 +42,15 @@ class StartVc: UIViewController {
             self.allRocketsv4 = rockets
                 self.createTableView(pages: rockets.count)
             }
-            Manager.shared.getLaunches { (launches) in
-                print(launches)
-                self.allLaunchesv4 = launches
+//            Manager.shared.getLaunches { (launches) in
+//                print(launches)
+//                self.allLaunches = launches
+//            }
+            
+
+            let https = "https://api.spacexdata.com/v4/launches"
+            request(urlString: https) { (launches) in
+                self.allLaunches = launches
             }
             
             title = "SpaceX-Rockets"
@@ -53,6 +61,31 @@ class StartVc: UIViewController {
             
            // createTableView()
     }
+    
+    
+    func request(urlString: String, completion: @escaping (Launches?) -> Void) {
+        guard let url = URL(string: urlString) else { return }
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            DispatchQueue.main.async {
+                if error != nil {
+                    print("error")
+                    completion(nil)
+                    return
+                }
+                guard let data = data else { return }
+                do {
+                    let decoder = JSONDecoder()
+                   // decoder.dateDecodingStrategy = .iso8601
+                    let launches = try decoder.decode(Launches.self, from: data)
+                    completion(launches)
+                } catch let jsonError {
+                    print("Fail to decode JSON", jsonError)
+                    completion(nil)
+                }
+            }
+        }.resume()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -226,7 +259,6 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
             let font: UIFont = UIFont.boldSystemFont(ofSize: 30)
             cell.textLabel?.textColor = .white
             cell.textLabel?.font = font
-          // cell.textLabel?.text = rocket.generalName
             cell.textLabel?.text = rocketAtIndex?.name
             cell.backgroundColor = .black
             return cell
@@ -367,9 +399,16 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
 extension StartVc {
     @objc func openNewViewController(sender:UIButton) {
         let openvc = OpenVc()
-        if allLaunchesv4 == nil {print("NILL")}
-        //openvc.launches = allLaunchesv4![0]
-      //  let currentModel = sender.tag
+        let currentModel = sender.tag
+        if let rocketId = allRocketsv4?[currentModel].id {
+            for now in allLaunches! {
+                if let id = now.rocket {
+                    if id.hashValue == rocketId.hashValue {
+                        openvc.currentSpaceshipLaunches = now
+                    }
+                }
+            }
+        }
        // openvc.launchList = dataController.spasexLaunchesData[currentModel]
         self.navigationController?.pushViewController(openvc, animated: true)
     }

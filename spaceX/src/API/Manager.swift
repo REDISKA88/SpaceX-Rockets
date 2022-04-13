@@ -27,12 +27,11 @@ class Manager {
                 }
                    }.resume()
     }
-    
-    
-        func getLaunches(completion: @escaping (NewLanch) -> Void) {
+        func getLaunches(completion: @escaping (Launches) -> Void) {
             URLSession.shared.dataTask(with: URL(string: Manager.urlLaunch)!) { (data, response, error) in
                 
-                if let data = data, let launches = try? JSONDecoder().decode(NewLanch.self, from: data) {
+                
+                if let data = data, let launches = try? JSONDecoder().decode(Launches.self, from: data) {
                     DispatchQueue.main.async {
                         completion(launches)
                     }
@@ -42,7 +41,6 @@ class Manager {
                 }
                    }.resume()
     }
-
 }
   /*
             let task = URLSession.shared.dataTask(with: request) { data, response, error in

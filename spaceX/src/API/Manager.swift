@@ -5,15 +5,16 @@
 //  Created by Aura Antilochus on 4/12/22.
 //  Copyright © 2022 AANTILOC. All rights reserved.
 //
-
+import UIKit
 import Foundation
 
 class Manager {
     
     static let shared = Manager()
     static let urlRocket = "https://api.spacexdata.com/v4/rockets"
+    static let urlLaunch = "https://api.spacexdata.com/v4/launches"
     
-        func getRockets (completion: @escaping (SpaceXRockets) -> Void) {
+        func getRockets(completion: @escaping (SpaceXRockets) -> Void) {
             URLSession.shared.dataTask(with: URL(string: Manager.urlRocket)!) { (data, response, error) in
                 
                 if let data = data, let rockets = try? JSONDecoder().decode(SpaceXRockets.self, from: data) {
@@ -26,9 +27,21 @@ class Manager {
                 }
                    }.resume()
     }
-
-
-
+    
+    
+        func getLaunches(completion: @escaping (NewLanch) -> Void) {
+            URLSession.shared.dataTask(with: URL(string: Manager.urlLaunch)!) { (data, response, error) in
+                
+                if let data = data, let launches = try? JSONDecoder().decode(NewLanch.self, from: data) {
+                    DispatchQueue.main.async {
+                        completion(launches)
+                    }
+                    
+                 } else {
+                    completion([])
+                }
+                   }.resume()
+    }
 
 }
   /*

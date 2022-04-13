@@ -10,14 +10,15 @@ import UIKit
 
 class OpenVc: UITableViewController {
     
-    var launchList:LaunchesData!
     //var dataController: DataController
     var myName:String?
+   var launches: NewLanch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self,
         forCellReuseIdentifier: "cell")
+        if launches == nil {print("NILL ON VC2")}
         //view.backgroundColor = .black
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -44,14 +45,11 @@ class OpenVc: UITableViewController {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
                 let font: UIFont = UIFont.boldSystemFont(ofSize: 30)
+    
                 cell.textLabel?.textColor = .white
                 cell.textLabel?.font = font
-                if launchList != nil {
-                    
-                    cell.textLabel?.text = launchList.name
-                }
+        cell.textLabel?.text = "rocketNm?.details"
                 cell.backgroundColor = .black
-
        
         return cell
     }

@@ -2,8 +2,7 @@ import UIKit
 
 class StartVc: UIViewController {
     
-    var dataController = DataController()
-    var images = [UIImage(named: "img"), UIImage(named: "1")]
+    var images = [UIImage(named: "img")]
     
         let scrollView: UIScrollView =
         {
@@ -30,6 +29,7 @@ class StartVc: UIViewController {
         
         let tableViewUniqueIdFactor = 1000
         var allRocketsv4: SpaceXRockets?
+        var allLaunchesv4: NewLanch?
         override func viewDidLoad()
         {
             super.viewDidLoad()
@@ -38,10 +38,13 @@ class StartVc: UIViewController {
             setupPageControl()
             Manager.shared.getRockets { (rockets) in
             self.allRocketsv4 = rockets
-
-                
                 self.createTableView(pages: rockets.count)
             }
+            Manager.shared.getLaunches { (launches) in
+                print(launches)
+                self.allLaunchesv4 = launches
+            }
+            
             title = "SpaceX-Rockets"
             view.backgroundColor = .black
             navigationController?.navigationBar.barTintColor = .clear
@@ -50,7 +53,6 @@ class StartVc: UIViewController {
             
            // createTableView()
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -60,7 +62,6 @@ class StartVc: UIViewController {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
-        
     private func setupScrollView() {
         
         scrollView.delegate = self
@@ -204,7 +205,17 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ImageViewCell") as! ImageViewCell
-            cell.mainImageView.image = images[indexPath.row]
+            if let url = URL(string: (rocketAtIndex?.flickrImages![0])!) {
+                DispatchQueue.global().async {
+                    if let data = try? Data(contentsOf: url) {
+                        if let image = UIImage(data: data) {
+                            DispatchQueue.main.async {
+                                cell.mainImageView.image = image
+                            }
+                        }
+                    }
+                }
+            }
             cell.mainImageView.layer.cornerRadius = 30
             cell.mainImageView.layer.masksToBounds = true
             cell.backgroundColor = .black
@@ -356,8 +367,10 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
 extension StartVc {
     @objc func openNewViewController(sender:UIButton) {
         let openvc = OpenVc()
-        let currentModel = sender.tag
-        openvc.launchList = dataController.spasexLaunchesData[currentModel]
+        if allLaunchesv4 == nil {print("NILL")}
+        //openvc.launches = allLaunchesv4![0]
+      //  let currentModel = sender.tag
+       // openvc.launchList = dataController.spasexLaunchesData[currentModel]
         self.navigationController?.pushViewController(openvc, animated: true)
     }
 }

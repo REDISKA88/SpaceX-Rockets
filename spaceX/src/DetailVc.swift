@@ -12,7 +12,7 @@ class DetailVc: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     private let myArray: NSArray = ["First","Second","Third"]
     private var myTableView: UITableView!
-    var dataController: DataController!
+   // var dataController: DataController!
     override func viewDidLoad() {
         super.viewDidLoad()
         

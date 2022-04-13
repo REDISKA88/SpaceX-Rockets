@@ -409,7 +409,14 @@ extension StartVc {
                 }
             }
         }
-       // openvc.launchList = dataController.spasexLaunchesData[currentModel]
+        if let currentRocketName = allRocketsv4?[currentModel].name {
+            openvc.rocketName = currentRocketName
+        }
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white,
+                              NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 20)]
+        navigationController?.navigationBar.titleTextAttributes = textAttributes
+        
+        // openvc.launchList = dataController.spasexLaunchesData[currentModel]
         self.navigationController?.pushViewController(openvc, animated: true)
     }
 }

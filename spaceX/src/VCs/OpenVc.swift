@@ -11,25 +11,23 @@ import UIKit
 class OpenVc: UITableViewController {
     
     //var dataController: DataController
-    var myName:String?
-    
+    var rocketName: String!
     var currentSpaceshipLaunches: SpaceXLaunches!
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self,
         forCellReuseIdentifier: "cell")
-//        requestLaunches(urlString: "https://api.spacexdata.com/v4/launches") { (launches) in
-//            guard let array = launches else {return}
-//            self.myStars = array
-//        }
+
+        
         //view.backgroundColor = .black
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+       // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        self.navigationItem.title = rocketName
+        
     }
-
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections

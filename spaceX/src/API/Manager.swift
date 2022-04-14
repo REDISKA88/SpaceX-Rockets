@@ -14,7 +14,7 @@ class Manager {
     static let urlRocket = "https://api.spacexdata.com/v4/rockets"
     static let urlLaunch = "https://api.spacexdata.com/v4/launches"
     
-        func getRockets(completion: @escaping (SpaceXRockets) -> Void) {
+        func requestRockets(completion: @escaping (SpaceXRockets) -> Void) {
             URLSession.shared.dataTask(with: URL(string: Manager.urlRocket)!) { (data, response, error) in
                 
                 if let data = data, let rockets = try? JSONDecoder().decode(SpaceXRockets.self, from: data) {
@@ -27,20 +27,30 @@ class Manager {
                 }
                    }.resume()
     }
-        func getLaunches(completion: @escaping (Launches) -> Void) {
-            URLSession.shared.dataTask(with: URL(string: Manager.urlLaunch)!) { (data, response, error) in
-                
-                
-                if let data = data, let launches = try? JSONDecoder().decode(Launches.self, from: data) {
-                    DispatchQueue.main.async {
-                        completion(launches)
-                    }
-                    
-                 } else {
-                    completion([])
+
+    func requestLaunches(urlString: String, completion: @escaping (Launches?) -> Void) {
+        guard let url = URL(string: urlString) else { return }
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            DispatchQueue.main.async {
+                if error != nil {
+                    print("error")
+                    completion(nil)
+                    return
                 }
-                   }.resume()
+                guard let data = data else { return }
+                do {
+                    let decoder = JSONDecoder()
+                   // decoder.dateDecodingStrategy = .iso8601
+                    let launches = try decoder.decode(Launches.self, from: data)
+                    completion(launches)
+                } catch let jsonError {
+                    print("Fail to decode JSON", jsonError)
+                    completion(nil)
+                }
+            }
+        }.resume()
     }
+    
 }
   /*
             let task = URLSession.shared.dataTask(with: request) { data, response, error in

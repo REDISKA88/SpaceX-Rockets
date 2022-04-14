@@ -30,7 +30,11 @@ class OpenVc: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 5
+        if currentSpaceshipLaunches.count == 0 {
+            print("one row")
+            return 1
+        }
+        return currentSpaceshipLaunches.count
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -61,6 +65,12 @@ class OpenVc: UITableViewController {
         cell.textLabel?.font = font
      */
         
+        if currentSpaceshipLaunches[0].id == "0" {
+            cell.nameLabel.text = currentSpaceshipLaunches[0].name
+            cell.dateLabel.text = ""
+            cell.statusImage.image = UIImage(named: "wait")
+            return cell
+        }
 //
 //        guard let name = currentSpaceshipLaunches.name else {
 //            return cell
@@ -69,7 +79,6 @@ class OpenVc: UITableViewController {
 //        if currentSpaceshipLaunches.success == true {
 //            cell.statusImage.image = UIImage(named: "success")
 //        } else { cell.statusImage.image = UIImage(named: "fail") }
-        
         return cell
     }
   

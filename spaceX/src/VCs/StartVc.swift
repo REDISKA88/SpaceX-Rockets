@@ -415,13 +415,22 @@ extension StartVc {
             for now in allLaunches! {
                 if let id = now.rocket {
                     if id.hashValue == rocketId.hashValue {
-                        openvc.currentSpaceshipLaunches.append(now)
+                        if openvc.currentSpaceshipLaunches == nil {
+                            openvc.currentSpaceshipLaunches = [SpaceXLaunches]()
+                            openvc.currentSpaceshipLaunches.append(now)
+                        } else {
+                            openvc.currentSpaceshipLaunches.append(now)
+                        }
+                        
                     }
                 }
             }
         }
         if let currentRocketName = allRocketsv4?[currentModel].name {
             openvc.rocketName = currentRocketName
+        }
+        if openvc.currentSpaceshipLaunches == nil {
+            openvc.currentSpaceshipLaunches = [SpaceXLaunches(rocket: Rocket(rawValue: "empty"), success: false, name: "Ожидаем запуск", id: "0")]
         }
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white,
                               NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 20)]

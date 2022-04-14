@@ -30,10 +30,6 @@ class OpenVc: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        if currentSpaceshipLaunches.count == 0 {
-            print("one row")
-            return 1
-        }
         return currentSpaceshipLaunches.count
     }
     
@@ -55,9 +51,6 @@ class OpenVc: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       // let cell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! infoCell
-
-        //let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
         let cell = tableView.dequeueReusableCell(withIdentifier: "launchCell", for: indexPath) as! RocketLaunches
     /*
         let font: UIFont = UIFont.boldSystemFont(ofSize: 30)
@@ -71,14 +64,15 @@ class OpenVc: UITableViewController {
             cell.statusImage.image = UIImage(named: "wait")
             return cell
         }
-//
-//        guard let name = currentSpaceshipLaunches.name else {
-//            return cell
-//        }
-//        cell.nameLabel.text = name
-//        if currentSpaceshipLaunches.success == true {
-//            cell.statusImage.image = UIImage(named: "success")
-//        } else { cell.statusImage.image = UIImage(named: "fail") }
+        
+        let instanceAtLaunch = currentSpaceshipLaunches[indexPath.row]
+        
+        cell.nameLabel.text = instanceAtLaunch.name
+        cell.dateLabel.text = "date"
+        if instanceAtLaunch.success == true {
+            cell.statusImage.image = UIImage(named: "success")
+        } else { cell.statusImage.image = UIImage(named: "fail") }
+        
         return cell
     }
   

@@ -212,6 +212,14 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
         navigationController?.pushViewController(anotherVc, animated: true)
     }
  */
+    
+    
+    func convertDate(dateString: String ) -> String {
+        let dateFormatter = DateFormatter(format: "yyyy-MM-dd")
+        let ruDate = dateString.toDateString(dateFormatter: dateFormatter, outputFormat: "dd MMMM yyyy")
+        return ruDate!
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
             let currentImage = images[indexPath.row]
@@ -267,14 +275,16 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
             cell.textLabel?.font = font
             cell.textLabel?.text = rocketAtIndex?.name
             cell.backgroundColor = .black
+            
             return cell
             
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! infoCell
             cell.titleLabel.text = "Первый запуск"
             cell.valueLabel.text = ""
-            //cell.unitLabel.text = rocket.launchDate
-            cell.unitLabel.text = rocketAtIndex?.firstFlight
+ 
+            let date = convertDate(dateString: (rocketAtIndex?.firstFlight)!)
+            cell.unitLabel.text = date
             cell.unitLabel.font = UIFont.systemFont(ofSize: 20)
             cell.unitLabel.textColor = .white
             return cell
@@ -337,7 +347,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
             cell.valueLabel.text = String(rocketAtIndex?.firstStage?.fuelAmountTons ?? 0)
            // cell.valueLabel.text = "\(rocket.firstStageFuel)"
             cell.valueLabel.font = UIFont.boldSystemFont(ofSize: 20)
-            cell.unitLabel.text = "tons"
+            cell.unitLabel.text = "ton"
             return cell
             
         case 8:
@@ -373,7 +383,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! infoCell
             cell.titleLabel.text = "Колличетво топлива"
             cell.valueLabel.text = String(rocketAtIndex?.secondStage?.fuelAmountTons ?? 0)
-            cell.unitLabel.text = "tons"
+            cell.unitLabel.text = "ton"
             return cell
             
         case 12:

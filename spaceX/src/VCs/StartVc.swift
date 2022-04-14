@@ -42,6 +42,7 @@ class StartVc: UIViewController {
             self.allRocketsv4 = rockets
                 self.createTableView(pages: rockets.count)
             }
+           
 //            Manager.shared.getLaunches { (launches) in
 //                print(launches)
 //                self.allLaunches = launches
@@ -58,8 +59,8 @@ class StartVc: UIViewController {
             navigationController?.navigationBar.barTintColor = .clear
             navigationController?.navigationBar.tintColor = .white
             
-            
-           // createTableView()
+    
+            // createTableView()
     }
     
     
@@ -229,6 +230,10 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
         return 14
     }
     
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+    }
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -256,6 +261,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
             
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: tableViewCellIdentifier)!
+            cell.selectionStyle = .none
             let font: UIFont = UIFont.boldSystemFont(ofSize: 30)
             cell.textLabel?.textColor = .white
             cell.textLabel?.font = font
@@ -304,6 +310,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
         
         case 5:
             let cell = tableView.dequeueReusableCell(withIdentifier: tableViewCellIdentifier)!
+            cell.selectionStyle = .none
             cell.textLabel?.textColor = .white
             cell.backgroundColor = .black
             cell.textLabel?.text = "ПЕРВАЯ СТУПЕНЬ"
@@ -345,6 +352,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: tableViewCellIdentifier)!
             cell.textLabel?.textColor = .white
             cell.backgroundColor = .black
+            cell.selectionStyle = .none
             cell.textLabel?.text = "ВТОРАЯ СТУПЕНЬ"
             cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
             return cell
@@ -379,6 +387,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "detail", for: indexPath) as! DetailCell
 
             cell.backgroundColor = .black
+            
             cell.myButton.layer.cornerRadius = cell.myButton.frame.size.height/2
             cell.myButton.layer.borderWidth = 0.5
             cell.myButton.tag = modelIndex
@@ -389,11 +398,13 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
     
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: tableViewCellIdentifier)!
+            cell.selectionStyle = .none
             //cell.backgroundColor = .black
             return cell
         }
         
     }
+    
 }
 
 extension StartVc {

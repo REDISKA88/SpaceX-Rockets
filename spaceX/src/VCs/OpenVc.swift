@@ -12,14 +12,12 @@ class OpenVc: UITableViewController {
     
     //var dataController: DataController
     var rocketName: String!
-    var currentSpaceshipLaunches: SpaceXLaunches!
+    var currentSpaceshipLaunches: [SpaceXLaunches]!
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self,
         forCellReuseIdentifier: "cell")
-
-        
-        //view.backgroundColor = .black
+        view.backgroundColor = .black
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -27,36 +25,51 @@ class OpenVc: UITableViewController {
        // self.navigationItem.rightBarButtonItem = self.editButtonItem
 
         self.navigationItem.title = rocketName
-        
+        tableView.register(UINib(nibName: "RocketLaunches", bundle: nil), forCellReuseIdentifier: "launchCell")
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 10
-    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 2
+        return 5
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 130
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
+    {
+        let verticalPadding: CGFloat = 10
 
+        let maskLayer = CALayer()
+        maskLayer.cornerRadius = 25
+        maskLayer.backgroundColor = UIColor.black.cgColor
+        maskLayer.frame = CGRect(x: cell.bounds.origin.x+10, y:
+        cell.bounds.origin.y, width: cell.bounds.width-20, height:
+        cell.bounds.height).insetBy(dx: 0, dy: verticalPadding/2)
+        cell.layer.mask = maskLayer
+    }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        // let cell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! infoCell
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
-                let font: UIFont = UIFont.boldSystemFont(ofSize: 30)
-                cell.textLabel?.textColor = .white
-                cell.textLabel?.font = font
+        //let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "launchCell", for: indexPath) as! RocketLaunches
+    /*
+        let font: UIFont = UIFont.boldSystemFont(ofSize: 30)
+        cell.textLabel?.textColor = .white
+        cell.textLabel?.font = font
+     */
         
-        guard let name = currentSpaceshipLaunches else {
-            cell.textLabel?.text = "text"
-            cell.backgroundColor = .black
-            return cell
-        }
-        cell.textLabel?.text = name.name
-        cell.backgroundColor = .black
-       
+//
+//        guard let name = currentSpaceshipLaunches.name else {
+//            return cell
+//        }
+//        cell.nameLabel.text = name
+//        if currentSpaceshipLaunches.success == true {
+//            cell.statusImage.image = UIImage(named: "success")
+//        } else { cell.statusImage.image = UIImage(named: "fail") }
+        
         return cell
     }
   

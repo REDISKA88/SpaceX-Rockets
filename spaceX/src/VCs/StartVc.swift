@@ -415,7 +415,7 @@ extension StartVc {
             for now in allLaunches! {
                 if let id = now.rocket {
                     if id.hashValue == rocketId.hashValue {
-                        openvc.currentSpaceshipLaunches = now
+                        openvc.currentSpaceshipLaunches.append(now)
                     }
                 }
             }

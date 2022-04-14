@@ -2,7 +2,7 @@ import UIKit
 
 class StartVc: UIViewController {
     
-    var images = [UIImage(named: "img")]
+   // var images = [UIImage(named: "img")]
     
         let scrollView: UIScrollView =
         {

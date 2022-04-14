@@ -29,7 +29,7 @@ extension StartVc {
             openvc.rocketName = currentRocketName
         }
         if openvc.currentSpaceshipLaunches == nil {
-            openvc.currentSpaceshipLaunches = [SpaceXLaunches(rocket: Rocket(rawValue: "empty"), success: false, name: "Ожидаем запуск", id: "0")]
+            openvc.currentSpaceshipLaunches = [SpaceXLaunches(rocket: Rocket(rawValue: "wait"), success: false, name: "Ожидаем запуск", id: "0", date: "0")]
         }
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white,
                               NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 20)]

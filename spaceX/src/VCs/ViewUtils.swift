@@ -14,6 +14,7 @@ extension StartVc {
         let ruDate = dateString.toDateString(dateFormatter: dateFormatter, outputFormat: "dd MMMM yyyy")
         return ruDate!
     }
+    
     func customizeStartVc() {
         title = "SpaceX-Rockets"
         view.backgroundColor = .black
@@ -22,3 +23,9 @@ extension StartVc {
     }
 }
 
+extension OpenVc {
+    func convertLaunchDate(dateString: String) -> String {
+        let dateFormatter = DateFormatter(format: "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+        if let ruDate = dateString.toDateString(dateFormatter: dateFormatter, outputFormat: "dd MMMM yyyy") { return ruDate } else { return dateString }
+    }
+}

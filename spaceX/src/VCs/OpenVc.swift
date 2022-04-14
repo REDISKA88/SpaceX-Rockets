@@ -68,7 +68,9 @@ class OpenVc: UITableViewController {
         let instanceAtLaunch = currentSpaceshipLaunches[indexPath.row]
         
         cell.nameLabel.text = instanceAtLaunch.name
-        cell.dateLabel.text = "date"
+        if let date = instanceAtLaunch.date {
+            cell.dateLabel.text = convertLaunchDate(dateString: date)
+        } else { cell.dateLabel.text = "" }
         if instanceAtLaunch.success == true {
             cell.statusImage.image = UIImage(named: "success")
         } else { cell.statusImage.image = UIImage(named: "fail") }

@@ -8,11 +8,13 @@ struct SpaceXLaunches: Codable {
     let success: Bool?
     let name: String?
     let id: String?
+    let date: String?
 
     enum CodingKeys: String, CodingKey {
         case rocket, success
         case name
         case id
+        case date = "date_utc"
     }
 }
 

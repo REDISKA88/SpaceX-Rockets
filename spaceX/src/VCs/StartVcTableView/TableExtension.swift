@@ -20,7 +20,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            let currentImage = images[indexPath.row]
+            let currentImage = UIImage(named: "img")
             let cropImage = currentImage!.getCropRatio()
             let resultHeight: CGFloat = (tableView.frame.width / cropImage)
             return resultHeight

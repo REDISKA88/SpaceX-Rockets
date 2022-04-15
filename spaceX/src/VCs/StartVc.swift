@@ -2,18 +2,14 @@ import UIKit
 
 class StartVc: UIViewController {
     
-   // var images = [UIImage(named: "img")]
-    
-        let scrollView: UIScrollView =
-        {
+        let scrollView: UIScrollView = {
             let scrollView = UIScrollView()
             scrollView.isPagingEnabled = true
             scrollView.translatesAutoresizingMaskIntoConstraints = false
             return scrollView
         }()
         
-        let stackView: UIStackView =
-        {
+        let stackView: UIStackView = {
             let stackView = UIStackView()
             stackView.axis = .horizontal
             stackView.distribution = .equalSpacing

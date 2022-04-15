@@ -10,19 +10,25 @@ import UIKit
 
 class NameAndSettingsCell: UITableViewCell {
     
+    var buttonTapCallback: () -> ()  = { }
     var nameLabel:UILabel!
-    var settings:UIButton = {
+
+    var settingsButton:UIButton = {
        var button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "settings"), for: .normal)
         return button
     }()
     
+    @objc func didTapButton() {
+        buttonTapCallback()
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+    
         // Initialization code
     }
-
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
@@ -32,12 +38,12 @@ class NameAndSettingsCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.addSubview(settings)
-        
-        settings.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: self.bounds.width/2).isActive = true
-        settings.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        settings.widthAnchor.constraint(equalToConstant: self.frame.width).isActive = true
-        settings.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        self.addSubview(settingsButton)
+        settingsButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        settingsButton.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: self.bounds.width/2).isActive = true
+        settingsButton.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        settingsButton.widthAnchor.constraint(equalToConstant: self.frame.width).isActive = true
+        settingsButton.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
     }
     
     required init?(coder: NSCoder) {

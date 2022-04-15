@@ -8,7 +8,17 @@
 import UIKit
 import Foundation
 
-extension StartVc: UITableViewDataSource, UITableViewDelegate {
+extension StartVc: UITableViewDataSource, UITableViewDelegate{
+
+    
+    func pushing() {
+       // let vc = SettingsVc()
+        let vc = SettingsVc()
+        
+    
+       //vc.modalPresentationStyle = .custom
+        self.navigationController?.present(vc, animated: true)
+    }
 
    /*
     @objc func openDetail(sender: UIButton){
@@ -85,11 +95,16 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "NameAndSettingsCell") as! NameAndSettingsCell
             cell.selectionStyle = .none
+            
+
             let font: UIFont = UIFont.boldSystemFont(ofSize: 30)
             cell.textLabel?.textColor = .white
             cell.textLabel?.font = font
             cell.textLabel?.text = rocketAtIndex?.name
             cell.backgroundColor = .black
+            cell.buttonTapCallback = {
+                self.pushing()
+            }
             
             return cell
             
@@ -110,6 +125,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
             case 2:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "OptionsTableCell", for: indexPath) as! OptionsTableViewCell
                 cell.selectionStyle = .none
+            
                 cell.optionsArea.tag = modelIndex
                 cell.params = setVaulesForRocketParameters(rocketAtIndex)
                 

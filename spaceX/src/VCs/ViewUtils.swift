@@ -18,6 +18,7 @@ extension StartVc {
     func customizeStartVc() {
         title = "SpaceX-Rockets"
         view.backgroundColor = .black
+        navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.barTintColor = .clear
         navigationController?.navigationBar.tintColor = .white
     }
@@ -27,5 +28,23 @@ extension OpenVc {
     func convertLaunchDate(dateString: String) -> String {
         let dateFormatter = DateFormatter(format: "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
         if let ruDate = dateString.toDateString(dateFormatter: dateFormatter, outputFormat: "dd MMMM yyyy") { return ruDate } else { return dateString }
+    }
+}
+
+extension UIView {
+
+func animateButtonDown() {
+
+    UIView.animate(withDuration: 0.1, delay: 0.0, options: [.allowUserInteraction, .curveEaseIn], animations: {
+        self.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+    }, completion: nil)
+}
+
+func animateButtonUp() {
+
+    UIView.animate(withDuration: 0.1, delay: 0.0, options: [.allowUserInteraction, .curveEaseOut], animations: {
+        self.transform = CGAffineTransform.identity
+    }, completion: nil)
+    
     }
 }

@@ -9,14 +9,19 @@
 import UIKit
 
 class OptionsTableViewCell: UITableViewCell {
+    func updateParameters() {
+        optionsArea.reloadData()
+    }
+    
 
     @IBOutlet weak var optionsArea: UICollectionView!
     var params: Parameters!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         optionsArea.delegate = self
         optionsArea.dataSource = self
+    
         optionsArea.register(UINib(nibName: "OptionCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "OptionCell")
     }
 

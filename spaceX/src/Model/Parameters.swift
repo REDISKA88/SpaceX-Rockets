@@ -10,10 +10,10 @@ import Foundation
 
 class Parameters {
 
-   var height: String = ""
-   var diameter: String = ""
-   var weight: String = ""
-   var payload: String = ""
+   var height: String
+   var diameter: String
+   var weight: String
+   var payload: String
     
     
     init() {

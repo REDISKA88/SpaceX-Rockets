@@ -10,13 +10,15 @@ import UIKit
 
 class DetailVc: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    @objc func back() {
+        print("back")
+    }
     private let myArray: NSArray = ["First","Second","Third"]
     private var myTableView: UITableView!
    // var dataController: DataController!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .white
+        view.backgroundColor = .blue
        // let barHeight: CGFloat = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
        // let displayWidth: CGFloat = self.view.frame.width
         //let displayHeight: CGFloat = self.view.frame.height

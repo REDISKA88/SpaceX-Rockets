@@ -10,49 +10,22 @@ import Foundation
 
 extension StartVc: UITableViewDataSource, UITableViewDelegate{
 
-    
-    func pushing() {
-       // let vc = SettingsVc()
-        let vc = SettingsVc()
-        
-    
-       //vc.modalPresentationStyle = .custom
-        self.navigationController?.present(vc, animated: true)
-    }
-
-   /*
-    @objc func openDetail(sender: UIButton){
-        let anotherVc = OpenVc()
-        let currentModel = sender.tag
-        anotherVc.instanceOfRocket = dataController.spacexStorage[currentModel]
-        navigationController?.pushViewController(anotherVc, animated: true)
-    }
- */
-    func setVaulesForRocketParameters(_ rocket: SpaceXRocket?) -> Parameters {
-        let params = Parameters()
-        params.setHeightFt(rocket?.height?.feet ?? 0)
-        params.setDiameterFt(rocket?.diameter?.feet ?? 0)
-        params.setWeightLb(rocket?.mass?.lb ?? 0)
-        params.setPayloadLb(rocket?.payloadWeights?[0].lb ?? 0)
-        return params
-    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
+        switch indexPath.row {
+        case 0:
             let currentImage = UIImage(named: "img")
             let cropImage = currentImage!.getCropRatio()
             let resultHeight: CGFloat = (tableView.frame.width / cropImage)
             return resultHeight
-        }
-        if indexPath.row == 1 {
+        case 1:
             return 80
-        }
-        if indexPath.row == 2 {
+        case 2:
             return 120
-        }
-        if indexPath.row == 14 {
+        case 14:
             return 100
+        default:
+            return 60
         }
-         return 60
     }
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
@@ -95,32 +68,19 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate{
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "NameAndSettingsCell") as! NameAndSettingsCell
             cell.selectionStyle = .none
-            
-
             let font: UIFont = UIFont.boldSystemFont(ofSize: 30)
             cell.textLabel?.textColor = .white
             cell.textLabel?.font = font
             cell.textLabel?.text = rocketAtIndex?.name
             cell.backgroundColor = .black
-            cell.buttonTapCallback = {
-                self.pushing()
-            }
+            cell.settingsButton.addTarget(self, action: #selector(openSettingsVc(sender:)), for: .touchUpInside)
+//            cell.buttonTapCallback = {
+//                self.pushing()
+//            }
             
             return cell
             
- /*
-            let cell = tableView.dequeueReusableCell(withIdentifier: tableViewCellIdentifier)!
-            cell.selectionStyle = .none
-            let font: UIFont = UIFont.boldSystemFont(ofSize: 30)
-            cell.textLabel?.textColor = .white
-            cell.textLabel?.font = font
-            cell.textLabel?.text = rocketAtIndex?.name
-            cell.backgroundColor = .black
         
-            return cell
-*/
-            
-            
             //MARK: - CollectionView
             case 2:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "OptionsTableCell", for: indexPath) as! OptionsTableViewCell
@@ -264,6 +224,15 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate{
             return cell
         }
         
+    }
+    
+    func setVaulesForRocketParameters(_ rocket: SpaceXRocket?) -> Parameters {
+        let params = Parameters()
+        params.setHeightFt(rocket?.height?.feet ?? 0)
+        params.setDiameterFt(rocket?.diameter?.feet ?? 0)
+        params.setWeightLb(rocket?.mass?.lb ?? 0)
+        params.setPayloadLb(rocket?.payloadWeights?[0].lb ?? 0)
+        return params
     }
     
 }

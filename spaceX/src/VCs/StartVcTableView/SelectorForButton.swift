@@ -9,6 +9,13 @@ import UIKit
 import Foundation
 
 extension StartVc {
+    
+    @objc func openSettingsVc(sender: UIButton) {
+        let vc = SettingsVc()
+        vc.id = sender.tag
+        self.navigationController?.present(vc, animated: true)
+    }
+    
     @objc func openNewViewController(sender:UIButton) {
         let openvc = OpenVc()
         let currentModel = sender.tag

@@ -10,6 +10,7 @@ import UIKit
 
 class SettingsCell: UITableViewCell {
     
+    
     var optionName = UILabel()
     let segSize = UISegmentedControl()
     //let seg = UISegmentedControl(items: ["m", "ft"])

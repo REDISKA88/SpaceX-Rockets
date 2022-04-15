@@ -9,7 +9,9 @@
 import UIKit
 
 class SettingsVc: UIViewController {
-
+    
+    var id = -1;
+    
     let mytableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .white
@@ -135,37 +137,8 @@ extension SettingsVc: UITableViewDelegate, UITableViewDataSource {
            
 }
 
-       
-
-    
-
-
 extension SettingsVc  {
-    @objc func segmentAction(_ segmentedControl: UISegmentedControl) {
-        switch (segmentedControl.selectedSegmentIndex) {
-        case 0:
-            break // Uno
-        case 1:
-            break // Dos
-        case 2:
-            break // Tres
-        default:
-            break
-        }
-    }
     
-    @objc private func filterApply(segment: UISegmentedControl) -> Void {
-        switch segment.selectedSegmentIndex {
-        case 1:
-           break // Uno
-        case 2:
-             break // Dos
-        case 3:
-             break // Dos
-        default:
-             break // Dos
-        }
-    }
     @objc func pressClose(sender: UIButton){
         sender.animateButtonUp()
         self.dismiss(animated: true, completion: nil)

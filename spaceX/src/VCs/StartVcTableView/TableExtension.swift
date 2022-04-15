@@ -9,6 +9,7 @@ import UIKit
 import Foundation
 
 extension StartVc: UITableViewDataSource, UITableViewDelegate {
+
    /*
     @objc func openDetail(sender: UIButton){
         let anotherVc = OpenVc()
@@ -17,7 +18,14 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
         navigationController?.pushViewController(anotherVc, animated: true)
     }
  */
-    
+    func setVaulesForRocketParameters(_ rocket: SpaceXRocket?) -> Parameters {
+        let params = Parameters()
+        params.setHeightFt(rocket?.height?.feet ?? 0)
+        params.setDiameterFt(rocket?.diameter?.feet ?? 0)
+        params.setWeightLb(rocket?.mass?.lb ?? 0)
+        params.setPayloadLb(rocket?.payloadWeights?[0].lb ?? 0)
+        return params
+    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
             let currentImage = UIImage(named: "img")
@@ -50,6 +58,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
         
         let modelIndex = tableView.tag - tableViewUniqueIdFactor
         let rocketAtIndex = allRocketsv4?[modelIndex]
+
         switch indexPath.row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ImageViewCell") as! ImageViewCell
@@ -95,11 +104,16 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
         
             return cell
 */
+            
+            
+            //MARK: - CollectionView
             case 2:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "OptionsTableCell", for: indexPath) as! OptionsTableViewCell
                 cell.selectionStyle = .none
+                cell.optionsArea.tag = modelIndex
+                cell.params = setVaulesForRocketParameters(rocketAtIndex)
                 
-                
+        
             return cell
     
             

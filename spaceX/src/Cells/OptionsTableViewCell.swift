@@ -11,6 +11,7 @@ import UIKit
 class OptionsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var optionsArea: UICollectionView!
+    var params: Parameters!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,30 +26,43 @@ class OptionsTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    
+//    func setCollectionViewDelegate(dataSourceDelegate: UICollectionViewDataSource & UICollectionViewDelegate, forRow row: Int) {
+//        optionsArea.delegate = dataSourceDelegate
+//        optionsArea.dataSource = dataSourceDelegate
+//        optionsArea.tag = row
+//        optionsArea.reloadData()
+//    }
+    
 }
 extension OptionsTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
-    
+
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = optionsArea.dequeueReusableCell(withReuseIdentifier: "OptionCell", for: indexPath) as! OptionCollectionViewCell
         switch indexPath.row {
         case 0:
             cell.unit.text = "Высота, ft"
+            cell.value.text = params.height
         case 1:
             cell.unit.text = "Диаметр, ft"
+            cell.value.text = params.diameter
         case 2:
             cell.unit.text = "Масса, lb"
+            cell.value.text = params.weight
         case 3:
             cell.unit.text = "Нагрузка, lb"
-        
+            cell.value.text = params.payload
         default:
             cell.unit.text = ""
+            cell.value.text = ""
         }
         return cell
     }
+
 }
 

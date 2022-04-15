@@ -56,9 +56,10 @@ class SettingsVc: UIViewController {
         view.addSubview(mytableView)
         mytableView.delegate = self
         mytableView.dataSource = self
+        //mytableView.allowsSelection = false
         mytableView.tableFooterView = UIView()
         NSLayoutConstraint.activate([
-            mytableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            mytableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 70),
             mytableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             mytableView.rightAnchor.constraint(equalTo: view.rightAnchor),
             mytableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
@@ -102,6 +103,22 @@ extension SettingsVc: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+        switch indexPath.row {
+            case 0:
+            case 1:
+        
+            case 2:
+        
+            case 3:
+        
+            
+        default:
+            <#code#>
+        }
+        
+        
+        
         return cell
     }
 
@@ -109,7 +126,7 @@ extension SettingsVc: UITableViewDelegate, UITableViewDataSource {
 }
 
 
-extension SettingsVc {
+extension SettingsVc  {
     @objc func pressClose(sender: UIButton){
         sender.animateButtonUp()
         self.dismiss(animated: true, completion: nil)

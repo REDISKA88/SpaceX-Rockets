@@ -20,7 +20,8 @@ class NameAndSettingsCell: UITableViewCell {
         return button
     }()
     
-    @objc func didTapButton() {
+    @objc func didTapButton(sender: UIButton) {
+        sender.animateButtonUp()
         buttonTapCallback()
     }
     
@@ -39,7 +40,9 @@ class NameAndSettingsCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.addSubview(settingsButton)
-        settingsButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        settingsButton.addTarget(self, action: #selector(didTapButton(sender:)), for: .touchUpInside)
+        settingsButton.addTarget(self, action: #selector(buttonTouchDown(sender:)), for: .touchDown)
+        settingsButton.addTarget(self, action: #selector(buttonTouchUpOutside(sender:)), for: .touchUpOutside)
         settingsButton.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: self.bounds.width/2).isActive = true
         settingsButton.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         settingsButton.widthAnchor.constraint(equalToConstant: self.frame.width).isActive = true
@@ -50,4 +53,14 @@ class NameAndSettingsCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+}
+extension NameAndSettingsCell  {
+
+    @objc func buttonTouchDown(sender: UIButton) {
+        sender.animateButtonDown()
+    }
+
+    @objc func buttonTouchUpOutside(sender: UIButton) {
+        sender.animateButtonUp()
+    }
 }

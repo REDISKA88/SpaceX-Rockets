@@ -19,6 +19,9 @@ class RocketLaunches: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         selectionStyle = .none
+        nameLabel.adjustsFontSizeToFitWidth = true
+        nameLabel.minimumScaleFactor = 0.5
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

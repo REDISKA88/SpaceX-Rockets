@@ -13,7 +13,7 @@ class NameAndSettingsCell: UITableViewCell {
     var buttonTapCallback: () -> ()  = { }
     var nameLabel:UILabel!
 
-    var settingsButton:UIButton = {
+    var settingsButton: UIButton = {
        var button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "settings"), for: .normal)

@@ -56,7 +56,9 @@ class SettingsVc: UIViewController {
         view.addSubview(mytableView)
         mytableView.delegate = self
         mytableView.dataSource = self
-        //mytableView.allowsSelection = false
+        mytableView.backgroundColor = .black
+        mytableView.allowsSelection = false
+        mytableView.register(SettingsCell.self, forCellReuseIdentifier: "SettingsCell")
         mytableView.tableFooterView = UIView()
         NSLayoutConstraint.activate([
             mytableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 70),
@@ -94,39 +96,76 @@ class SettingsVc: UIViewController {
 }
 
 extension SettingsVc: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 4
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
+
+        let cell = mytableView.dequeueReusableCell(withIdentifier: "SettingsCell", for: indexPath) as! SettingsCell
+        cell.backgroundColor = .black
+        cell.segSize.selectedSegmentTintColor = .white
+        cell.segSize.backgroundColor = .darkGray
         switch indexPath.row {
-            case 0:
-            case 1:
-        
-            case 2:
-        
-            case 3:
-        
-            
+        case 0, 1:
+            if indexPath.row == 0 {
+                cell.optionName.text = "Высота"
+            } else { cell.optionName.text = "Диаметр"}
+            cell.segSize.insertSegment(withTitle: "m", at: 0, animated: false)
+            cell.segSize.insertSegment(withTitle: "ft", at: 1, animated: false)
+            cell.segSize.selectedSegmentIndex = 1
+            return cell
+        case 2, 3:
+            if indexPath.row == 2 {
+                cell.optionName.text = "Масса"
+            } else { cell.optionName.text = "Полезная нагрузка"}
+            cell.segSize.insertSegment(withTitle: "kg", at: 0, animated: false)
+            cell.segSize.insertSegment(withTitle: "lb", at: 1, animated: false)
+            cell.segSize.selectedSegmentIndex = 1
         default:
-            <#code#>
+            return cell
         }
-        
-        
-        
         return cell
     }
 
-
+           
 }
+
+       
+
+    
 
 
 extension SettingsVc  {
+    @objc func segmentAction(_ segmentedControl: UISegmentedControl) {
+        switch (segmentedControl.selectedSegmentIndex) {
+        case 0:
+            break // Uno
+        case 1:
+            break // Dos
+        case 2:
+            break // Tres
+        default:
+            break
+        }
+    }
+    
+    @objc private func filterApply(segment: UISegmentedControl) -> Void {
+        switch segment.selectedSegmentIndex {
+        case 1:
+           break // Uno
+        case 2:
+             break // Dos
+        case 3:
+             break // Dos
+        default:
+             break // Dos
+        }
+    }
     @objc func pressClose(sender: UIButton){
         sender.animateButtonUp()
         self.dismiss(animated: true, completion: nil)

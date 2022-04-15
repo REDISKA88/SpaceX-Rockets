@@ -22,6 +22,11 @@
 		B8BCAE7F27FDDFAC009E2E52 /* ImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BCAE7E27FDDFAC009E2E52 /* ImageViewCell.swift */; };
 		B8BD1AC12804E08500C2F7A9 /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD1AC02804E08500C2F7A9 /* Manager.swift */; };
 		B8BD1AC428051F4000C2F7A9 /* Launches.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD1AC328051F4000C2F7A9 /* Launches.swift */; };
+		B8C319FF280909880072A56A /* OptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C319FD280909880072A56A /* OptionsTableViewCell.swift */; };
+		B8C31A00280909880072A56A /* OptionsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8C319FE280909880072A56A /* OptionsTableViewCell.xib */; };
+		B8C31A03280909AB0072A56A /* OptionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C31A01280909AB0072A56A /* OptionCollectionViewCell.swift */; };
+		B8C31A04280909AB0072A56A /* OptionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8C31A02280909AB0072A56A /* OptionCollectionViewCell.xib */; };
+		B8C31A08280941CE0072A56A /* NameAndSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C31A07280941CE0072A56A /* NameAndSettingsCell.swift */; };
 		B8EEE60127FD20F1006931C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EEE60027FD20F1006931C4 /* AppDelegate.swift */; };
 		B8EEE60327FD20F1006931C4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EEE60227FD20F1006931C4 /* SceneDelegate.swift */; };
 		B8EEE60A27FD20F1006931C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8EEE60927FD20F1006931C4 /* Assets.xcassets */; };
@@ -47,6 +52,11 @@
 		B8BCAE7E27FDDFAC009E2E52 /* ImageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewCell.swift; sourceTree = "<group>"; };
 		B8BD1AC02804E08500C2F7A9 /* Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
 		B8BD1AC328051F4000C2F7A9 /* Launches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launches.swift; sourceTree = "<group>"; };
+		B8C319FD280909880072A56A /* OptionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsTableViewCell.swift; sourceTree = "<group>"; };
+		B8C319FE280909880072A56A /* OptionsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionsTableViewCell.xib; sourceTree = "<group>"; };
+		B8C31A01280909AB0072A56A /* OptionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCollectionViewCell.swift; sourceTree = "<group>"; };
+		B8C31A02280909AB0072A56A /* OptionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionCollectionViewCell.xib; sourceTree = "<group>"; };
+		B8C31A07280941CE0072A56A /* NameAndSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameAndSettingsCell.swift; sourceTree = "<group>"; };
 		B8EEE5FD27FD20F0006931C4 /* spaceX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spaceX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8EEE60027FD20F1006931C4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B8EEE60227FD20F1006931C4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -132,6 +142,9 @@
 				B800321727FFB8B800D2B4F5 /* infoCell.swift */,
 				B8A80E4E27FFD6DE009851FE /* DetailCell.swift */,
 				B811C7A028077D3B00B32C9A /* RocketLaunches.swift */,
+				B8C319FD280909880072A56A /* OptionsTableViewCell.swift */,
+				B8C31A01280909AB0072A56A /* OptionCollectionViewCell.swift */,
+				B8C31A07280941CE0072A56A /* NameAndSettingsCell.swift */,
 				B8EEAA852800D1A600CC2BC0 /* xibs */,
 			);
 			path = Cells;
@@ -143,6 +156,8 @@
 				B800321827FFB8B800D2B4F5 /* infoCell.xib */,
 				B8A80E4F27FFD6DE009851FE /* DetailCell.xib */,
 				B811C7A128077D3B00B32C9A /* RocketLaunches.xib */,
+				B8C319FE280909880072A56A /* OptionsTableViewCell.xib */,
+				B8C31A02280909AB0072A56A /* OptionCollectionViewCell.xib */,
 			);
 			path = xibs;
 			sourceTree = "<group>";
@@ -256,7 +271,9 @@
 				B8EEE61727FD3640006931C4 /* Main.storyboard in Resources */,
 				B800321A27FFB8B800D2B4F5 /* infoCell.xib in Resources */,
 				B811C7A328077D3B00B32C9A /* RocketLaunches.xib in Resources */,
+				B8C31A00280909880072A56A /* OptionsTableViewCell.xib in Resources */,
 				B8EEE60D27FD20F1006931C4 /* LaunchScreen.storyboard in Resources */,
+				B8C31A04280909AB0072A56A /* OptionCollectionViewCell.xib in Resources */,
 				B8EEE60A27FD20F1006931C4 /* Assets.xcassets in Resources */,
 				B8A80E5127FFD6DE009851FE /* DetailCell.xib in Resources */,
 			);
@@ -272,13 +289,16 @@
 				B8A80E5027FFD6DE009851FE /* DetailCell.swift in Sources */,
 				B800321927FFB8B800D2B4F5 /* infoCell.swift in Sources */,
 				B8A80E4D27FFD62F009851FE /* DetailVc.swift in Sources */,
+				B8C319FF280909880072A56A /* OptionsTableViewCell.swift in Sources */,
 				B8BD1AC428051F4000C2F7A9 /* Launches.swift in Sources */,
 				B8EEE60127FD20F1006931C4 /* AppDelegate.swift in Sources */,
 				B8BD1AC12804E08500C2F7A9 /* Manager.swift in Sources */,
 				B8B455962807BEA100F1265F /* DateExtensions.swift in Sources */,
 				B811C7A228077D3B00B32C9A /* RocketLaunches.swift in Sources */,
 				B8F9CBE727FF856C004B3415 /* Rocket.swift in Sources */,
+				B8C31A08280941CE0072A56A /* NameAndSettingsCell.swift in Sources */,
 				B8B4559B2807D55100F1265F /* SelectorForButton.swift in Sources */,
+				B8C31A03280909AB0072A56A /* OptionCollectionViewCell.swift in Sources */,
 				B8AFC89327FFEE320051A191 /* OpenVc.swift in Sources */,
 				B8BCAE7F27FDDFAC009E2E52 /* ImageViewCell.swift in Sources */,
 				B8EEE60327FD20F1006931C4 /* SceneDelegate.swift in Sources */,

@@ -25,15 +25,20 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
             let resultHeight: CGFloat = (tableView.frame.width / cropImage)
             return resultHeight
         }
-       
-        if indexPath.row == 13 {
+        if indexPath.row == 1 {
+            return 80
+        }
+        if indexPath.row == 2 {
+            return 120
+        }
+        if indexPath.row == 14 {
             return 100
         }
          return 60
     }
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
-        return 14
+        return 15
     }
     
 
@@ -48,7 +53,11 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ImageViewCell") as! ImageViewCell
-            if let url = URL(string: (rocketAtIndex?.flickrImages![0])!) {
+            var randomInt = 0
+            if let imageCount = rocketAtIndex?.flickrImages?.count {
+                randomInt = Int.random(in: 0..<imageCount)
+            }
+            if let url = URL(string: (rocketAtIndex?.flickrImages![randomInt])!) {
                 DispatchQueue.global().async {
                     if let data = try? Data(contentsOf: url) {
                         if let image = UIImage(data: data) {
@@ -63,9 +72,9 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
             cell.mainImageView.layer.masksToBounds = true
             cell.backgroundColor = .black
             return cell
-            
+
         case 1:
-            let cell = tableView.dequeueReusableCell(withIdentifier: tableViewCellIdentifier)!
+            let cell = tableView.dequeueReusableCell(withIdentifier: "NameAndSettingsCell") as! NameAndSettingsCell
             cell.selectionStyle = .none
             let font: UIFont = UIFont.boldSystemFont(ofSize: 30)
             cell.textLabel?.textColor = .white
@@ -75,7 +84,26 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
             
             return cell
             
-        case 2:
+ /*
+            let cell = tableView.dequeueReusableCell(withIdentifier: tableViewCellIdentifier)!
+            cell.selectionStyle = .none
+            let font: UIFont = UIFont.boldSystemFont(ofSize: 30)
+            cell.textLabel?.textColor = .white
+            cell.textLabel?.font = font
+            cell.textLabel?.text = rocketAtIndex?.name
+            cell.backgroundColor = .black
+        
+            return cell
+*/
+            case 2:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "OptionsTableCell", for: indexPath) as! OptionsTableViewCell
+                cell.selectionStyle = .none
+                
+                
+            return cell
+    
+            
+        case 3:
             let cell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! infoCell
             cell.titleLabel.text = "Первый запуск"
             cell.valueLabel.text = ""
@@ -86,7 +114,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
             cell.unitLabel.textColor = .white
             return cell
             
-        case 3:
+        case 4:
             let cell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! infoCell
             cell.titleLabel.text = "Страна"
             cell.valueLabel.text = ""
@@ -98,7 +126,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
             cell.unitLabel.textColor = .white
             return cell
             
-        case 4:
+        case 5:
             let cell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! infoCell
             guard let cost = rocketAtIndex?.costPerLaunch else {
                 cell.valueLabel.text = "UNKNOWN"
@@ -113,7 +141,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
             cell.unitLabel.text = "$"
             return cell
         
-        case 5:
+        case 6:
             let cell = tableView.dequeueReusableCell(withIdentifier: tableViewCellIdentifier)!
             cell.selectionStyle = .none
             cell.textLabel?.textColor = .white
@@ -122,7 +150,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
             cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
             return cell
             
-        case 6:
+        case 7:
             let cell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! infoCell
             cell.titleLabel.text = "Количество двигателей"
             guard let engines = rocketAtIndex?.firstStage?.engines else {
@@ -135,7 +163,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
             cell.unitLabel.text = "nan"
             cell.unitLabel.textColor = .clear
             return cell
-        case 7:
+        case 8:
             let cell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! infoCell
             cell.titleLabel.text = "Колличетво топлива"
             cell.valueLabel.text = String(rocketAtIndex?.firstStage?.fuelAmountTons ?? 0)
@@ -143,7 +171,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
             cell.unitLabel.text = "ton"
             return cell
             
-        case 8:
+        case 9:
             let cell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! infoCell
             cell.titleLabel.text = "Время сгорания"
             cell.valueLabel.text = "\(rocketAtIndex?.firstStage?.burnTimeSEC ?? 0)"
@@ -151,7 +179,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
             cell.unitLabel.text = "sec"
             return cell
             
-        case 9:
+        case 10:
             let cell = tableView.dequeueReusableCell(withIdentifier: tableViewCellIdentifier)!
             cell.textLabel?.textColor = .white
             cell.backgroundColor = .black
@@ -159,7 +187,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
             cell.textLabel?.text = "ВТОРАЯ СТУПЕНЬ"
             cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
             return cell
-        case 10:
+        case 11:
             let cell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! infoCell
             cell.titleLabel.text = "Количество двигателей"
             guard let engines = rocketAtIndex?.firstStage?.engines else {
@@ -172,21 +200,21 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate {
             cell.unitLabel.text = "nan"
             cell.unitLabel.textColor = .clear
             return cell
-        case 11:
+        case 12:
             let cell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! infoCell
             cell.titleLabel.text = "Колличетво топлива"
             cell.valueLabel.text = String(rocketAtIndex?.secondStage?.fuelAmountTons ?? 0)
             cell.unitLabel.text = "ton"
             return cell
             
-        case 12:
+        case 13:
             let cell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! infoCell
             cell.titleLabel.text = "Время сгорания"
             cell.valueLabel.text = "\(rocketAtIndex?.secondStage?.burnTimeSEC ?? 0)"
             cell.unitLabel.text = "sec"
             return cell
             
-        case 13:
+        case 14:
             let cell = tableView.dequeueReusableCell(withIdentifier: "detail", for: indexPath) as! DetailCell
 
             cell.backgroundColor = .black

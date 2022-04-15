@@ -25,6 +25,7 @@ class StartVc: UIViewController {
         let padding: CGFloat = 20
         let pageWidth = UIScreen.main.bounds.width
         let tableViewCellIdentifier = "cell"
+        let optionsTableViewCellId = "TableViewCell"
         let tableViewUniqueIdFactor = 1000
         var allLaunches: Launches?
         var allRocketsv4: SpaceXRockets?
@@ -80,8 +81,11 @@ class StartVc: UIViewController {
         tableView.register(UITableViewCell.self,
                            forCellReuseIdentifier: tableViewCellIdentifier)
         tableView.register(ImageViewCell.self, forCellReuseIdentifier: "ImageViewCell")
+        tableView.register(NameAndSettingsCell.self, forCellReuseIdentifier: "NameAndSettingsCell")
         tableView.register(UINib(nibName: "infoCell", bundle: nil), forCellReuseIdentifier: "info")
+        
         tableView.register(UINib(nibName: "DetailCell", bundle: nil), forCellReuseIdentifier: "detail")
+        tableView.register(UINib(nibName: "OptionsTableViewCell", bundle: nil), forCellReuseIdentifier: "OptionsTableCell")
     }
     
     

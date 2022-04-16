@@ -8,8 +8,6 @@
 
 import UIKit
 
-
-
 class OptionsTableViewCell: UITableViewCell{
    
     //!!
@@ -18,7 +16,6 @@ class OptionsTableViewCell: UITableViewCell{
     }
     var params: Parameters!
     @IBOutlet weak var optionsArea: UICollectionView!
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,26 +26,14 @@ class OptionsTableViewCell: UITableViewCell{
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
     }
-    
-    
-//    func setCollectionViewDelegate(dataSourceDelegate: UICollectionViewDataSource & UICollectionViewDelegate, forRow row: Int) {
-//        optionsArea.delegate = dataSourceDelegate
-//        optionsArea.dataSource = dataSourceDelegate
-//        optionsArea.tag = row
-//        optionsArea.reloadData()
-//    }
-    
 }
 extension OptionsTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
-
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
     }
-
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = optionsArea.dequeueReusableCell(withReuseIdentifier: "OptionCell", for: indexPath) as! OptionCollectionViewCell
         switch indexPath.row {

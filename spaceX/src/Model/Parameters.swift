@@ -14,6 +14,7 @@ class Parameters {
    var diameter: Diameter
    var weight: Weight
    var payload: Payload
+    
    var optionsView: UICollectionView? = nil
     enum Displayed {
         case feet
@@ -48,43 +49,12 @@ class Parameters {
     
     
     init() {
-        self.height = Height(meters: "", feet: "", display: .meters)
-        self.diameter = Diameter(meters: "", feet: "", display: .meters)
-        self.weight = Weight(lb: "", kg: "", display: .kg)
-        self.payload = Payload(lb: "", kg: "", display: .kg)
+        self.height = Height(meters: "", feet: "", display: .feet)
+        self.diameter = Diameter(meters: "", feet: "", display: .feet)
+        self.weight = Weight(lb: "", kg: "", display: .lb)
+        self.payload = Payload(lb: "", kg: "", display: .lb)
     }
     
-//    func setHeightFt() {
-//        self.height = height.feet
-//    }
-//
-//    func setsetHeightMeters(_ height: Double) {
-//        self.height = height.toString()
-//    }
-//
-//    func setDiameterFt(_ diameter: Double) {
-//        self.diameter = diameter.toString()
-//    }
-//
-//    func setDiameterMeters(_ diameter: Double) {
-//         self.diameter = diameter.toString()
-//     }
-//
-//    func setWeightLb(_ weight: Int) {
-//        self.weight = String(weight)
-//    }
-//
-//    func setWeightKg(_ weight: Int) {
-//           self.weight = String(weight)
-//       }
-//
-//    func setPayloadLb(_ payload: Int) {
-//        self.payload = String(payload)
-//    }
-//
-//    func setPayloadKg(_ payload: Int) {
-//        self.payload = String(payload)
-//    }
 }
 
 extension Double {

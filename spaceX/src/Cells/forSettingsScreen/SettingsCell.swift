@@ -10,7 +10,6 @@ import UIKit
 
 class SettingsCell: UITableViewCell {
     
-    
     var optionName = UILabel()
     let segSize = UISegmentedControl()
     let segHeft = UISegmentedControl()
@@ -19,26 +18,13 @@ class SettingsCell: UITableViewCell {
         super.awakeFromNib()
         
     }
-//
-//    @objc func changeSizeUnints(_ sender: UISegmentedControl) {
-//
-//    }
-//
-//    @objc func changeHeftUnints(_ sender: UISegmentedControl) {
-//
-//    }
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         setupLabel()
         setupSegSize()
         setipSegHeft()
-        
-//        segSize.addTarget(self, action: #selector(changeSizeUnints(_:)), for: .valueChanged)
-        
-
-        //segSize.sendActions(for: UIControlEvents.valueChanged)
     }
     
     required init?(coder: NSCoder) {
@@ -49,7 +35,6 @@ class SettingsCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
     }
-    
     
     func setupLabel() {
         
@@ -84,8 +69,6 @@ class SettingsCell: UITableViewCell {
         segHeft.translatesAutoresizingMaskIntoConstraints = false
         segHeft.layer.cornerRadius = 5.0
         segHeft.selectedSegmentIndex = 0
-               //segSize.sendActions(for: UIControlEvents.valueChanged)
-
         segHeft.selectedSegmentTintColor = .white
         segHeft.backgroundColor = .darkGray
                

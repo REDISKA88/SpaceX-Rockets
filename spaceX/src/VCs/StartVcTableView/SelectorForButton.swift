@@ -15,7 +15,7 @@ extension StartVc {
         let vc = SettingsVc()
         vc.isModalInPresentation = true
         vc.id = currentModel
-        vc.contextTable = arrayTables
+        //vc.contextTable = arrayTables
        // vc.contextCollection = safeCollection[currentModel]
         vc.receiveParams = currentParameters
         self.navigationController?.present(vc, animated: true)
@@ -56,4 +56,5 @@ extension StartVc {
         
         self.navigationController?.pushViewController(openvc, animated: true)
     }
+
 }

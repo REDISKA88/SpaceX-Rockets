@@ -22,19 +22,6 @@ extension StartVc {
         navigationController?.navigationBar.barTintColor = .clear
         navigationController?.navigationBar.tintColor = .white
     }
-    
-//    @objc func pressClose(sender: UIButton){
-//        sender.animateButtonUp()
-//        self.dismiss(animated: true, completion: nil)
-//    }
-//
-//    @objc func buttonTouchDown(sender: UIButton) {
-//        sender.animateButtonDown()
-//    }
-//
-//    @objc func buttonTouchUpOutside(sender: UIButton) {
-//        sender.animateButtonUp()
-//    }
 }
 
 extension OpenVc {

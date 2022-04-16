@@ -13,9 +13,7 @@ class SettingsVc: UIViewController {
     
     var id = -1;
     var receiveParams: [Parameters]!
-    var contextTable: UITableView!
-    var contextCollection: UICollectionView!
-    //weak
+
     let mytableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .white
@@ -48,7 +46,6 @@ class SettingsVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-        self.navigationItem.title = "Настройки"
         buttonSetup()
         labelSetup()
         tableSetup()
@@ -91,9 +88,7 @@ class SettingsVc: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-    self.view.frame = CGRect(x: 0, y: UIScreen.main.bounds.height/10, width: self.view.bounds.width, height: UIScreen.main.bounds.height)
-        
-        
+        self.view.frame = CGRect(x: 0, y: UIScreen.main.bounds.height/10, width: self.view.bounds.width, height: UIScreen.main.bounds.height)
         self.view.layer.cornerRadius = 30
         self.view.layer.masksToBounds = true
 
@@ -112,23 +107,18 @@ extension SettingsVc: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = mytableView.dequeueReusableCell(withIdentifier: "SettingsCell", for: indexPath) as! SettingsCell
+        var height = 1
+        var diameter = 1
+        var weight = 1
+        var payload = 1
         cell.backgroundColor = .black
         cell.segSize.selectedSegmentTintColor = .white
         cell.segSize.backgroundColor = .darkGray
-        var height = 0
-        var diameter = 0
-        if receiveParams[id].height.display == .feet {
-            height = 1
-        }
+        if receiveParams[id].height.display == .meters { height = 0 }
+        if receiveParams[id].diameter.display == .meters { diameter = 0 }
+        if receiveParams[id].weight.display == .kg { weight = 0 }
+        if receiveParams[id].payload.display == .kg { payload = 0 }
         
-        if receiveParams[id].diameter.display == .feet {
-            diameter = 1
-        }
-//        print(receiveParams[id].diameter.display)
-//        print(receiveParams[id].weight.display)
-//        print(receiveParams[id].payload.display)
-
-
         switch indexPath.row {
         case 0, 1:
             cell.segHeft.removeFromSuperview()
@@ -139,12 +129,8 @@ extension SettingsVc: UITableViewDelegate, UITableViewDataSource {
             } else { cell.optionName.text = "Диаметр"}
             cell.segSize.insertSegment(withTitle: "m", at: 0, animated: false)
             cell.segSize.insertSegment(withTitle: "ft", at: 1, animated: false)
-            if indexPath.row == 0 {
-                cell.segSize.selectedSegmentIndex = height
-            }
-            if indexPath.row == 1 {
-                cell.segSize.selectedSegmentIndex = diameter
-            }
+            if indexPath.row == 0 { cell.segSize.selectedSegmentIndex = height }
+            if indexPath.row == 1 { cell.segSize.selectedSegmentIndex = diameter }
             cell.segSize.addTarget(self, action: #selector(changeSizeUnints(_:)), for: .valueChanged)
             
             return cell
@@ -157,9 +143,9 @@ extension SettingsVc: UITableViewDelegate, UITableViewDataSource {
             } else { cell.optionName.text = "Полезная нагрузка"}
             cell.segHeft.insertSegment(withTitle: "kg", at: 0, animated: false)
             cell.segHeft.insertSegment(withTitle: "lb", at: 1, animated: false)
-            cell.segHeft.selectedSegmentIndex = 1
+            if indexPath.row == 2 { cell.segHeft.selectedSegmentIndex = weight }
+            if indexPath.row == 3 { cell.segHeft.selectedSegmentIndex = payload }
             cell.segHeft.addTarget(self, action: #selector(changeHeftUnints(_:)), for: .valueChanged)
-            //print(params.height, params.diameter)
         default:
             return cell
         }
@@ -176,25 +162,15 @@ extension SettingsVc {
         //case 0: height
         //case 1: diameter
         //selector [ 0 = meters, 1 = ft ]
-        if  receiveParams == nil {
-            print("sdfdsfds")
-            return
-        }
         switch sender.tag {
         case 0:
             if sender.selectedSegmentIndex == 0 {
                 receiveParams[id].height.display = .meters
-                print(receiveParams[id].height.display)
-            } else { receiveParams[id].height.display = .feet
-                 print(receiveParams[id].height.display)
-            }
+            } else { receiveParams[id].height.display = .feet}
         case 1:
             if sender.selectedSegmentIndex == 0 {
                 receiveParams[id].diameter.display = .meters
-                print(receiveParams[id].diameter.display)
-            } else { receiveParams[id].diameter.display = .feet
-                print(receiveParams[id].diameter.display)
-            }
+            } else { receiveParams[id].diameter.display = .feet }
         default:
             break
         }
@@ -205,11 +181,6 @@ extension SettingsVc {
         //case 2: weight
         //case 3: payload
         //selector [ 0 = kg, 1 = lb ]
-        print(id)
-        if  receiveParams == nil {
-                   print("sdfdsfds")
-                   return
-               }
         switch sender.tag {
         case 2:
             if sender.selectedSegmentIndex == 0 {
@@ -229,8 +200,6 @@ extension SettingsVc {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "StartVc") as! StartVc
 
         self.dismiss(animated: true,completion: {
-           // self.contextTable.reloadData()
-          //  self.contextCollection.reloadData()
             self.receiveParams[self.id].optionsView?.reloadData()
             vc.reservedParams = self.receiveParams
         })

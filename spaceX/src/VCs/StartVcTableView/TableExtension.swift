@@ -41,14 +41,13 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate{
         let modelIndex = tableView.tag - tableViewUniqueIdFactor
         let rocketAtIndex = allRocketsv4?[modelIndex]
         let rocketParams = reservedParams[modelIndex]
+        
         switch indexPath.row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ImageViewCell") as! ImageViewCell
-            var randomInt = 0
-            if let imageCount = rocketAtIndex?.flickrImages?.count {
-                randomInt = Int.random(in: 0..<imageCount)
-            }
-            if let url = URL(string: (rocketAtIndex?.flickrImages![randomInt])!) {
+            var images = rocketAtIndex?.flickrImages
+            images?.shuffle()
+            if let url = URL(string: images?[0] ?? "img"){
                 DispatchQueue.global().async {
                     if let data = try? Data(contentsOf: url) {
                         if let image = UIImage(data: data) {
@@ -72,7 +71,6 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate{
             cell.textLabel?.font = font
             cell.textLabel?.text = rocketAtIndex?.name
             cell.backgroundColor = .black
-            //cell.settingsButton.addTarget(self, action: #selector(openSettingsVc(sender:)), for: .touchUpInside)
             cell.buttonTapCallback = {
                 self.pushing(currentModel: modelIndex, currentParameters: self.reservedParams)
             }

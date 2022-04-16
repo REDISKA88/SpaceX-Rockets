@@ -11,6 +11,7 @@ import UIKit
 class SettingsVc: UIViewController {
     
     var id = -1;
+    var params: Parameters!
     
     let mytableView: UITableView = {
         let tableView = UITableView()
@@ -114,20 +115,30 @@ extension SettingsVc: UITableViewDelegate, UITableViewDataSource {
         cell.segSize.backgroundColor = .darkGray
         switch indexPath.row {
         case 0, 1:
+            cell.segHeft.removeFromSuperview()
+            cell.segHeft.tag = -1
+            cell.segSize.tag = indexPath.row
             if indexPath.row == 0 {
                 cell.optionName.text = "Высота"
-            } else { cell.optionName.text = "Диаметр"}
+            } else { cell.optionName.text = "Диаметр" }
             cell.segSize.insertSegment(withTitle: "m", at: 0, animated: false)
             cell.segSize.insertSegment(withTitle: "ft", at: 1, animated: false)
             cell.segSize.selectedSegmentIndex = 1
+            cell.segSize.addTarget(self, action: #selector(changeSizeUnints(_:)), for: .valueChanged)
+            
             return cell
         case 2, 3:
+            cell.segSize.removeFromSuperview()
+            cell.segSize.tag = -1
+            cell.segHeft.tag = indexPath.row
             if indexPath.row == 2 {
                 cell.optionName.text = "Масса"
             } else { cell.optionName.text = "Полезная нагрузка"}
-            cell.segSize.insertSegment(withTitle: "kg", at: 0, animated: false)
-            cell.segSize.insertSegment(withTitle: "lb", at: 1, animated: false)
-            cell.segSize.selectedSegmentIndex = 1
+            cell.segHeft.insertSegment(withTitle: "kg", at: 0, animated: false)
+            cell.segHeft.insertSegment(withTitle: "lb", at: 1, animated: false)
+            cell.segHeft.selectedSegmentIndex = 1
+            cell.segHeft.addTarget(self, action: #selector(changeHeftUnints(_:)), for: .valueChanged)
+            //print(params.height, params.diameter)
         default:
             return cell
         }
@@ -137,7 +148,34 @@ extension SettingsVc: UITableViewDelegate, UITableViewDataSource {
            
 }
 
-extension SettingsVc  {
+extension SettingsVc {
+    
+    @objc func changeSizeUnints(_ sender: UISegmentedControl) {
+
+        //case 0: height
+        //case 1: diameter
+        //selector [ 0 = meters, 1 = ft ]
+        
+        switch sender.tag {
+        case 0:
+            if sender.selectedSegmentIndex == 0 {
+                params.height.display = .meters
+            } else { params.height.display = .feet }
+        case 1:
+            if sender.selectedSegmentIndex == 0 {
+                params.diameter.display = .meters
+            } else { params.diameter.display = .feet }
+        default:
+            break
+        }
+        
+    }
+    
+    @objc func changeHeftUnints(_ sender: UISegmentedControl) {
+
+    }
+    
+
     
     @objc func pressClose(sender: UIButton){
         sender.animateButtonUp()

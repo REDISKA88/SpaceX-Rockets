@@ -10,40 +10,81 @@ import Foundation
 
 class Parameters {
 
-   var height: String
-   var diameter: String
-   var weight: String
-   var payload: String
+   var height: Height
+   var diameter: Diameter
+   var weight: Weight
+   var payload: Payload
+
+    enum Displayed {
+        case feet
+        case meters
+        case lb
+        case kg
+    }
+    
+    struct Height {
+        var meters: String = ""
+        var feet: String = ""
+        var display: Displayed = .feet
+    }
+    
+    struct Diameter {
+        var meters: String = ""
+        var feet: String = ""
+        var display: Displayed = .feet
+    }
+    
+    struct Weight {
+        var lb: String = ""
+        var kg: String = ""
+        var display: Displayed = .lb
+    }
+    
+    struct Payload {
+        var lb: String = ""
+        var kg: String = ""
+        var display: Displayed = .lb
+    }
     
     
     init() {
-        self.height =  ""
-        self.diameter = ""
-        self.weight =  ""
-        self.payload = ""
-    }
-    init(height: String, diameter: String, weight: String, payload: String) {
-
-        self.height = height
-        self.diameter = diameter
-        self.weight = weight
-        self.payload = payload
-    }
-    func setHeightFt(_ height: Double) {
-        self.height = height.toString()
+        self.height = Height()
+        self.diameter = Diameter()
+        self.weight = Weight()
+        self.payload = Payload()
     }
     
-    func setDiameterFt(_ diameter: Double) {
-        self.diameter = diameter.toString()
-    }
-    
-    func setWeightLb(_ weight: Int) {
-        self.weight = String(weight)
-    }
-    
-    func setPayloadLb(_ payload: Int) {
-        self.payload = String(payload)
-    }
+//    func setHeightFt() {
+//        self.height = height.feet
+//    }
+//
+//    func setsetHeightMeters(_ height: Double) {
+//        self.height = height.toString()
+//    }
+//
+//    func setDiameterFt(_ diameter: Double) {
+//        self.diameter = diameter.toString()
+//    }
+//
+//    func setDiameterMeters(_ diameter: Double) {
+//         self.diameter = diameter.toString()
+//     }
+//
+//    func setWeightLb(_ weight: Int) {
+//        self.weight = String(weight)
+//    }
+//
+//    func setWeightKg(_ weight: Int) {
+//           self.weight = String(weight)
+//       }
+//
+//    func setPayloadLb(_ payload: Int) {
+//        self.payload = String(payload)
+//    }
+//
+//    func setPayloadKg(_ payload: Int) {
+//        self.payload = String(payload)
+//    }
 }
 
 extension Double {

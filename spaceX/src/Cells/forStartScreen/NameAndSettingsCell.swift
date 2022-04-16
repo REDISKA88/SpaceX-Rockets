@@ -10,7 +10,7 @@ import UIKit
 
 class NameAndSettingsCell: UITableViewCell {
     
-   // var buttonTapCallback: () -> ()  = { }
+    var buttonTapCallback: () -> ()  = { }
     var nameLabel:UILabel!
 
     var settingsButton: UIButton = {
@@ -20,10 +20,10 @@ class NameAndSettingsCell: UITableViewCell {
         return button
     }()
     
-//    @objc func didTapButton(sender: UIButton) {
-//        sender.animateButtonUp()
-//        buttonTapCallback()
-//    }
+    @objc func didTapButton(sender: UIButton) {
+        sender.animateButtonUp()
+        buttonTapCallback()
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -40,7 +40,7 @@ class NameAndSettingsCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.addSubview(settingsButton)
-//        settingsButton.addTarget(self, action: #selector(didTapButton(sender:)), for: .touchUpInside)
+        settingsButton.addTarget(self, action: #selector(didTapButton(sender:)), for: .touchUpInside)
         settingsButton.addTarget(self, action: #selector(buttonTouchDown(sender:)), for: .touchDown)
         settingsButton.addTarget(self, action: #selector(buttonTouchUpOutside(sender:)), for: .touchUpOutside)
         settingsButton.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: self.bounds.width/2).isActive = true

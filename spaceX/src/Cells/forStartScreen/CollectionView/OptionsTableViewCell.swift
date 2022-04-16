@@ -9,13 +9,17 @@
 import UIKit
 
 class OptionsTableViewCell: UITableViewCell {
+   
+    
+    //!!
+    
     func updateParameters() {
         optionsArea.reloadData()
     }
     
-
-    @IBOutlet weak var optionsArea: UICollectionView!
     var params: Parameters!
+    @IBOutlet weak var optionsArea: UICollectionView!
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -52,16 +56,16 @@ extension OptionsTableViewCell: UICollectionViewDelegate, UICollectionViewDataSo
         switch indexPath.row {
         case 0:
             cell.unit.text = "Высота, ft"
-            cell.value.text = params.height
+        //    cell.value.text = params.height
         case 1:
             cell.unit.text = "Диаметр, ft"
-            cell.value.text = params.diameter
+      //      cell.value.text = params.diameter
         case 2:
             cell.unit.text = "Масса, lb"
-            cell.value.text = params.weight
+        //    cell.value.text = params.weight
         case 3:
             cell.unit.text = "Нагрузка, lb"
-            cell.value.text = params.payload
+     //       cell.value.text = params.payload
         default:
             cell.unit.text = ""
             cell.value.text = ""

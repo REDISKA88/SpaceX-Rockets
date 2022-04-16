@@ -10,9 +10,17 @@ import Foundation
 
 extension StartVc {
     
+    func pushing(currentModel: Int, currentParameters: Parameters) {
+        let vc = SettingsVc()
+        vc.id = currentModel
+        vc.params = currentParameters
+        self.navigationController?.present(vc, animated: true)
+    }
+    
     @objc func openSettingsVc(sender: UIButton) {
         let vc = SettingsVc()
         vc.id = sender.tag
+        
         self.navigationController?.present(vc, animated: true)
     }
     

@@ -41,7 +41,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate{
         
         let modelIndex = tableView.tag - tableViewUniqueIdFactor
         let rocketAtIndex = allRocketsv4?[modelIndex]
-
+        let rocketParams = setVaulesForRocketParameters(rocketAtIndex)
         switch indexPath.row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ImageViewCell") as! ImageViewCell
@@ -73,10 +73,10 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate{
             cell.textLabel?.font = font
             cell.textLabel?.text = rocketAtIndex?.name
             cell.backgroundColor = .black
-            cell.settingsButton.addTarget(self, action: #selector(openSettingsVc(sender:)), for: .touchUpInside)
-//            cell.buttonTapCallback = {
-//                self.pushing()
-//            }
+            //cell.settingsButton.addTarget(self, action: #selector(openSettingsVc(sender:)), for: .touchUpInside)
+            cell.buttonTapCallback = {
+                self.pushing(currentModel: modelIndex, currentParameters: rocketParams)
+            }
             
             return cell
             
@@ -87,7 +87,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate{
                 cell.selectionStyle = .none
             
                 cell.optionsArea.tag = modelIndex
-                cell.params = setVaulesForRocketParameters(rocketAtIndex)
+                cell.params = rocketParams
                 
         
             return cell
@@ -228,11 +228,32 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate{
     
     func setVaulesForRocketParameters(_ rocket: SpaceXRocket?) -> Parameters {
         let params = Parameters()
-        params.setHeightFt(rocket?.height?.feet ?? 0)
-        params.setDiameterFt(rocket?.diameter?.feet ?? 0)
-        params.setWeightLb(rocket?.mass?.lb ?? 0)
-        params.setPayloadLb(rocket?.payloadWeights?[0].lb ?? 0)
+        params.height.feet = rocket?.height?.feet?.toString() ?? "0"
+        params.height.meters = rocket?.height?.meters?.toString() ?? "0"
+        params.diameter.feet = rocket?.diameter?.feet?.toString() ?? "0"
+        params.diameter.meters = rocket?.diameter?.meters?.toString() ?? "0"
+        if let massKg = rocket?.mass?.kg {
+           params.weight.kg = String(massKg)
+        } else { params.weight.kg = "" }
+        if let massLb = rocket?.mass?.lb {
+            params.weight.lb = String(massLb)
+        } else { params.weight.lb = "" }
+        if let payloadKg = rocket?.payloadWeights?[0].kg {
+            params.payload.kg = String(payloadKg) } else { params.payload.kg = "" }
+        if let payloadLb = rocket?.payloadWeights?[0].lb {
+            params.payload.lb = String(payloadLb) } else { params.payload.lb = "" }
         return params
     }
+    
+    enum Units {
+        case heightFt
+        case DiameterFt
+        case WeightLb
+        case PayloadLb
+    }
+    
+//    func setCustomValues(for RocketatIndex: SpaceXRocket?) -> Parameters {
+//
+//    }
     
 }

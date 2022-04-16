@@ -16,7 +16,7 @@ extension StartVc {
         vc.isModalInPresentation = true
         vc.id = currentModel
         vc.contextTable = arrayTables
-        vc.contextCollection = safeCollection
+       // vc.contextCollection = safeCollection[currentModel]
         vc.receiveParams = currentParameters
         self.navigationController?.present(vc, animated: true)
     }

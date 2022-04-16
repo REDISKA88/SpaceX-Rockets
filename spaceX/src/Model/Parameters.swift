@@ -5,7 +5,7 @@
 //  Created by Aura Antilochus on 4/15/22.
 //  Copyright © 2022 AANTILOC. All rights reserved.
 //
-
+import UIKit
 import Foundation
 
 class Parameters {
@@ -14,7 +14,7 @@ class Parameters {
    var diameter: Diameter
    var weight: Weight
    var payload: Payload
-
+   var optionsView: UICollectionView? = nil
     enum Displayed {
         case feet
         case meters

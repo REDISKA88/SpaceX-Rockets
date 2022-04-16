@@ -230,11 +230,8 @@ extension SettingsVc {
 
         self.dismiss(animated: true,completion: {
            // self.contextTable.reloadData()
-            self.contextCollection.reloadData()
-           // vc.safeCollection.reloadData()
-            if vc.safeCollection == nil {
-                print("suka nil")
-            }
+          //  self.contextCollection.reloadData()
+            self.receiveParams[self.id].optionsView?.reloadData()
             vc.reservedParams = self.receiveParams
         })
     }

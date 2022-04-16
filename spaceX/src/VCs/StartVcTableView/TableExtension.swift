@@ -40,10 +40,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate{
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let modelIndex = tableView.tag - tableViewUniqueIdFactor
         let rocketAtIndex = allRocketsv4?[modelIndex]
-        var rocketParams = reservedParams[modelIndex]
-        if arrayTables == nil {
-            print("NIL SUKA")
-        }
+        let rocketParams = reservedParams[modelIndex]
         switch indexPath.row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ImageViewCell") as! ImageViewCell
@@ -87,11 +84,11 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate{
             case 2:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "OptionsTableCell", for: indexPath) as! OptionsTableViewCell
                 cell.selectionStyle = .none
-               // print("on table height: ", rocketParams.height.display)
                 cell.updateParameters()
                 cell.optionsArea.tag = modelIndex
-                safeCollection = cell.optionsArea
+                rocketParams.optionsView = cell.optionsArea
                 cell.params = rocketParams
+
             return cell
     
             

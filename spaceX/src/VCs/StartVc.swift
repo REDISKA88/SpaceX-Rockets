@@ -26,8 +26,7 @@ class StartVc: UIViewController {
         var allRocketsv4: SpaceXRockets?
         var reservedParams = [Parameters]()
         var arrayTables: UITableView!
-        var safeCollection: UICollectionView!
-
+    
         override func viewDidLoad() {
             super.viewDidLoad()
             setupScrollView()

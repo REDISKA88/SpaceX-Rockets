@@ -8,11 +8,14 @@
 
 import UIKit
 
+
 class SettingsVc: UIViewController {
     
     var id = -1;
-    var params: Parameters!
-    
+    var receiveParams: [Parameters]!
+    var contextTable: UITableView!
+    var contextCollection: UICollectionView!
+    //weak
     let mytableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .white
@@ -108,11 +111,24 @@ extension SettingsVc: UITableViewDelegate, UITableViewDataSource {
         return 80
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
         let cell = mytableView.dequeueReusableCell(withIdentifier: "SettingsCell", for: indexPath) as! SettingsCell
         cell.backgroundColor = .black
         cell.segSize.selectedSegmentTintColor = .white
         cell.segSize.backgroundColor = .darkGray
+        var height = 0
+        var diameter = 0
+        if receiveParams[id].height.display == .feet {
+            height = 1
+        }
+        
+        if receiveParams[id].diameter.display == .feet {
+            diameter = 1
+        }
+//        print(receiveParams[id].diameter.display)
+//        print(receiveParams[id].weight.display)
+//        print(receiveParams[id].payload.display)
+
+
         switch indexPath.row {
         case 0, 1:
             cell.segHeft.removeFromSuperview()
@@ -120,10 +136,15 @@ extension SettingsVc: UITableViewDelegate, UITableViewDataSource {
             cell.segSize.tag = indexPath.row
             if indexPath.row == 0 {
                 cell.optionName.text = "Высота"
-            } else { cell.optionName.text = "Диаметр" }
+            } else { cell.optionName.text = "Диаметр"}
             cell.segSize.insertSegment(withTitle: "m", at: 0, animated: false)
             cell.segSize.insertSegment(withTitle: "ft", at: 1, animated: false)
-            cell.segSize.selectedSegmentIndex = 1
+            if indexPath.row == 0 {
+                cell.segSize.selectedSegmentIndex = height
+            }
+            if indexPath.row == 1 {
+                cell.segSize.selectedSegmentIndex = diameter
+            }
             cell.segSize.addTarget(self, action: #selector(changeSizeUnints(_:)), for: .valueChanged)
             
             return cell
@@ -155,16 +176,25 @@ extension SettingsVc {
         //case 0: height
         //case 1: diameter
         //selector [ 0 = meters, 1 = ft ]
-        
+        if  receiveParams == nil {
+            print("sdfdsfds")
+            return
+        }
         switch sender.tag {
         case 0:
             if sender.selectedSegmentIndex == 0 {
-                params.height.display = .meters
-            } else { params.height.display = .feet }
+                receiveParams[id].height.display = .meters
+                print(receiveParams[id].height.display)
+            } else { receiveParams[id].height.display = .feet
+                 print(receiveParams[id].height.display)
+            }
         case 1:
             if sender.selectedSegmentIndex == 0 {
-                params.diameter.display = .meters
-            } else { params.diameter.display = .feet }
+                receiveParams[id].diameter.display = .meters
+                print(receiveParams[id].diameter.display)
+            } else { receiveParams[id].diameter.display = .feet
+                print(receiveParams[id].diameter.display)
+            }
         default:
             break
         }
@@ -172,14 +202,41 @@ extension SettingsVc {
     }
     
     @objc func changeHeftUnints(_ sender: UISegmentedControl) {
-
+        //case 2: weight
+        //case 3: payload
+        //selector [ 0 = kg, 1 = lb ]
+        print(id)
+        if  receiveParams == nil {
+                   print("sdfdsfds")
+                   return
+               }
+        switch sender.tag {
+        case 2:
+            if sender.selectedSegmentIndex == 0 {
+                receiveParams[id].weight.display = .kg
+            } else { receiveParams[id].weight.display = .lb }
+        case 3:
+            if sender.selectedSegmentIndex == 0 {
+                receiveParams[id].payload.display = .kg
+            } else { receiveParams[id].payload.display = .lb }
+        default:
+            break
+        }
     }
-    
-
     
     @objc func pressClose(sender: UIButton){
         sender.animateButtonUp()
-        self.dismiss(animated: true, completion: nil)
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "StartVc") as! StartVc
+
+        self.dismiss(animated: true,completion: {
+           // self.contextTable.reloadData()
+            self.contextCollection.reloadData()
+           // vc.safeCollection.reloadData()
+            if vc.safeCollection == nil {
+                print("suka nil")
+            }
+            vc.reservedParams = self.receiveParams
+        })
     }
     
     @objc func buttonTouchDown(sender: UIButton) {

@@ -17,7 +17,6 @@ class OptionCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         layer.cornerRadius = 30
-        
         //layer.masksToBounds = true
         // Initialization code
     }

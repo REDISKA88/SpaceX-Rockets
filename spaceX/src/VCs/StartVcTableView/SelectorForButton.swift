@@ -8,15 +8,19 @@
 import UIKit
 import Foundation
 
+
 extension StartVc {
-    
-    func pushing(currentModel: Int, currentParameters: Parameters) {
+   
+    func pushing(currentModel: Int, currentParameters: [Parameters]) {
         let vc = SettingsVc()
+        vc.isModalInPresentation = true
         vc.id = currentModel
-        vc.params = currentParameters
+        vc.contextTable = arrayTables
+        vc.contextCollection = safeCollection
+        vc.receiveParams = currentParameters
         self.navigationController?.present(vc, animated: true)
     }
-    
+
     @objc func openSettingsVc(sender: UIButton) {
         let vc = SettingsVc()
         vc.id = sender.tag

@@ -16,7 +16,6 @@ class StartVc: UIViewController {
             stackView.translatesAutoresizingMaskIntoConstraints = false
             return stackView
         }()
-        
         let pageControl = UIPageControl()
         let padding: CGFloat = 20
         let pageWidth = UIScreen.main.bounds.width
@@ -25,6 +24,9 @@ class StartVc: UIViewController {
         let tableViewUniqueIdFactor = 1000
         var allLaunches: Launches?
         var allRocketsv4: SpaceXRockets?
+        var reservedParams = [Parameters]()
+        var arrayTables: UITableView!
+        var safeCollection: UICollectionView!
 
         override func viewDidLoad() {
             super.viewDidLoad()
@@ -39,7 +41,6 @@ class StartVc: UIViewController {
             Manager.shared.requestLaunches(urlString: Manager.urlLaunch) { (launches) in
                 self.allLaunches = launches
             }
-            
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,15 +53,15 @@ class StartVc: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
-    private func createTableView(pages: Int) {
+    private func createTableView(pages: Int){
         pageControl.numberOfPages = pages
         for modelIndex in 0 ..< pages {
                 let tableView = UITableView()
-            
+                
                 tableView.translatesAutoresizingMaskIntoConstraints = false
                 tableView.tag = tableViewUniqueIdFactor + modelIndex
                 registerCustomCells(for: tableView)
-               
+                reservedParams.append(setVaulesForRocketParameters(allRocketsv4![modelIndex]))
                 tableView.dataSource = self
                 tableView.delegate = self
                 
@@ -70,6 +71,7 @@ class StartVc: UIViewController {
                 stackView.addArrangedSubview(tableView)
                 tableView.widthAnchor.constraint(equalToConstant: pageWidth)
                     .isActive = true
+            self.arrayTables = tableView
             }
         }
     

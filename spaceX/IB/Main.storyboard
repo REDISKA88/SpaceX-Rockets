@@ -10,7 +10,7 @@
         <!--Start Vc-->
         <scene sceneID="V13-gs-gBo">
             <objects>
-                <viewController id="1kZ-Uf-gPw" customClass="StartVc" customModule="spaceX" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="StartVc" id="1kZ-Uf-gPw" customClass="StartVc" customModule="spaceX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Jtn-4Q-tDe">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

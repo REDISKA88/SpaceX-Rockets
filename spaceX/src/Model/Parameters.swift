@@ -48,10 +48,10 @@ class Parameters {
     
     
     init() {
-        self.height = Height()
-        self.diameter = Diameter()
-        self.weight = Weight()
-        self.payload = Payload()
+        self.height = Height(meters: "", feet: "", display: .meters)
+        self.diameter = Diameter(meters: "", feet: "", display: .meters)
+        self.weight = Weight(lb: "", kg: "", display: .kg)
+        self.payload = Payload(lb: "", kg: "", display: .kg)
     }
     
 //    func setHeightFt() {

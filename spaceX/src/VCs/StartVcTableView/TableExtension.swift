@@ -9,7 +9,7 @@ import UIKit
 import Foundation
 
 extension StartVc: UITableViewDataSource, UITableViewDelegate{
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
         case 0:
@@ -32,16 +32,18 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate{
         return 15
     }
     
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
     }
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let modelIndex = tableView.tag - tableViewUniqueIdFactor
         let rocketAtIndex = allRocketsv4?[modelIndex]
-        let rocketParams = setVaulesForRocketParameters(rocketAtIndex)
+        var rocketParams = reservedParams[modelIndex]
+        if arrayTables == nil {
+            print("NIL SUKA")
+        }
         switch indexPath.row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ImageViewCell") as! ImageViewCell
@@ -75,7 +77,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate{
             cell.backgroundColor = .black
             //cell.settingsButton.addTarget(self, action: #selector(openSettingsVc(sender:)), for: .touchUpInside)
             cell.buttonTapCallback = {
-                self.pushing(currentModel: modelIndex, currentParameters: rocketParams)
+                self.pushing(currentModel: modelIndex, currentParameters: self.reservedParams)
             }
             
             return cell
@@ -85,11 +87,11 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate{
             case 2:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "OptionsTableCell", for: indexPath) as! OptionsTableViewCell
                 cell.selectionStyle = .none
-            
+               // print("on table height: ", rocketParams.height.display)
+                cell.updateParameters()
                 cell.optionsArea.tag = modelIndex
+                safeCollection = cell.optionsArea
                 cell.params = rocketParams
-                
-        
             return cell
     
             
@@ -244,16 +246,5 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate{
             params.payload.lb = String(payloadLb) } else { params.payload.lb = "" }
         return params
     }
-    
-    enum Units {
-        case heightFt
-        case DiameterFt
-        case WeightLb
-        case PayloadLb
-    }
-    
-//    func setCustomValues(for RocketatIndex: SpaceXRocket?) -> Parameters {
-//
-//    }
     
 }

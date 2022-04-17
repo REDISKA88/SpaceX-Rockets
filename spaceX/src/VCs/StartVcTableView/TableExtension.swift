@@ -209,6 +209,7 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate{
             cell.myButton.layer.cornerRadius = cell.myButton.frame.size.height/2
             cell.myButton.layer.borderWidth = 0.5
             cell.myButton.tag = modelIndex
+            cell.selectionStyle = .none
             cell.myButton.addTarget(self, action: #selector(openNewViewController(sender:)), for: .touchUpInside)
 
     

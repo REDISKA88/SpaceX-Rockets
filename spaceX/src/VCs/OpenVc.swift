@@ -15,17 +15,9 @@ class OpenVc: UITableViewController {
     var currentSpaceshipLaunches: [SpaceXLaunches]!
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UITableViewCell.self,
-        forCellReuseIdentifier: "cell")
         view.backgroundColor = .black
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-       // self.navigationItem.rightBarButtonItem = self.editButtonItem
-
         self.navigationItem.title = rocketName
-        tableView.register(UINib(nibName: "RocketLaunches", bundle: nil), forCellReuseIdentifier: "launchCell")
+        tableView.register(LaunchesCell.self, forCellReuseIdentifier: "allLaunchesRocket")
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -37,10 +29,8 @@ class OpenVc: UITableViewController {
         return 130
     }
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
-    {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let verticalPadding: CGFloat = 10
-
         let maskLayer = CALayer()
         maskLayer.cornerRadius = 25
         maskLayer.backgroundColor = UIColor.black.cgColor
@@ -51,22 +41,16 @@ class OpenVc: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "launchCell", for: indexPath) as! RocketLaunches
-    /*
-        let font: UIFont = UIFont.boldSystemFont(ofSize: 30)
-        cell.textLabel?.textColor = .white
-        cell.textLabel?.font = font
-     */
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "allLaunchesRocket", for: indexPath) as! LaunchesCell
+        cell.backgroundColor = #colorLiteral(red: 0.1607642174, green: 0.1607982516, blue: 0.1564477086, alpha: 1)
+        cell.selectionStyle = .none
         if currentSpaceshipLaunches[0].id == "0" {
             cell.nameLabel.text = currentSpaceshipLaunches[0].name
             cell.dateLabel.text = ""
             cell.statusImage.image = UIImage(named: "wait")
             return cell
         }
-        
         let instanceAtLaunch = currentSpaceshipLaunches[indexPath.row]
-        
         cell.nameLabel.text = instanceAtLaunch.name
         if let date = instanceAtLaunch.date {
             cell.dateLabel.text = convertLaunchDate(dateString: date)
@@ -74,8 +58,7 @@ class OpenVc: UITableViewController {
         if instanceAtLaunch.success == true {
             cell.statusImage.image = UIImage(named: "success")
         } else { cell.statusImage.image = UIImage(named: "fail") }
-        
-        return cell
-    }
+            return cell
+        }
 }
 

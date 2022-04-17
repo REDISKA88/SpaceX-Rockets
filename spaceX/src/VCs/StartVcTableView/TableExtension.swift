@@ -45,8 +45,8 @@ extension StartVc: UITableViewDataSource, UITableViewDelegate{
         switch indexPath.row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ImageViewCell") as! ImageViewCell
-            var images = rocketAtIndex?.flickrImages
-            images?.shuffle()
+            let images = rocketAtIndex?.flickrImages
+            //images?.shuffle()
             if let url = URL(string: images?[0] ?? "img"){
                 DispatchQueue.global().async {
                     if let data = try? Data(contentsOf: url) {
